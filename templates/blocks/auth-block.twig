@@ -1,0 +1,52 @@
+<div class="content">
+    <div class="sign-tabs">
+        <button class="sign-in-btn active" onclick="changeAuthBlock('login')">{{ app.translations.sign_in }}</button>
+        <button class="sign-up-btn" onclick="changeAuthBlock('register')">{{ app.translations.sign_up }}</button>
+    </div>
+    <img class="signin-line" src="/assets/images/signin-line.png" alt="line">
+    <div class="signin-inputs-block active">
+        <div class="sign-user-data-block">
+            <label>{{ app.translations.phone }}</label>
+            <input type="text" id="login" placeholder="{{ app.translations.phone_number }}">
+            <p class="forget-clarification">must start from country code (+971)</p>
+        </div>
+        <div class="sign-user-data-block">
+            <label>{{ app.translations.pin }}</label>
+            <input type="password" id="pin" placeholder="{{ app.translations.your_pin }}">
+        </div>
+        <div class="forgot-pass-block">
+            <input type="radio" class="type" name="type" id="forgot" value="forgot" onchange="ifForgot($(this));"/>
+            <label for="forgot"><span id="forgot_span"></span>Forgot
+                PIN ?</label>
+        </div>
+        <div class="auth-button">
+            <button class="butn-pinc" type="button" id="sign-in" onclick="Login($(this).parent().parent())">{{ app.translations.sign_in }}</button>
+        </div>
+    </div>
+    <div class="signup-inputs-block">
+        <div class="auth-inputs-row">
+            <div class="sign-user-data-block">
+                <label>{{ app.translations.name }}</label>
+                <input type="text" id="user-name" placeholder="{{ app.translations.name }}">
+            </div>
+            <div class="sign-user-data-block">
+                <label>{{ app.translations.phone }}</label>
+                <input type="text" id="user-phone" placeholder="{{ app.translations.phone }}">
+            </div>
+        </div>
+        <div class="auth-inputs-row" style="justify-content: flex-start;">
+            <div class="sign-user-data-block">
+                <label style="padding-right: 22px;">{{ app.translations.email }}</label>
+                <input type="text" id="user-email" placeholder="{{ app.translations.email }}" >
+            </div>
+            <div class="sign-user-data-block">
+                <label>{{ app.translations.birthday }}</label>
+                <input type="text" id="user-birthday" placeholder="dd-mm" autocomplete="new-password">
+            </div>
+        </div>
+
+        <div class="auth-button" style="margin-top: 40px">
+            <button class="butn-pinc" type="button" id="sign-up" onclick="Register()">{{ app.translations.sign_up }}</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <link rel="stylesheet" href="/assets/css/animate.css">
+
+    <div class="categories-products-container">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-3 col-lg-2 mob-hide" style="padding: 0">
+                    {% include 'blocks/sidebar-menu.twig' %}
+                </div>
+                <div class="col-md-9 col-lg-10">
+                    <div class="products-list-container">
+                        {% for prod in products %}
+                            <div class="product-cart">
+                                <div class="product-img-block">
+                                    {% if prod.image_id is not null %}
+                                        <a class="img" onclick="showSideNavProdDetails({{ prod|json_encode|e('html_attr')}})">
+                                            <img src="{{ app.product_link }}{{ prod.image_id }}&thumb=1">
+                                        </a>
+                                    {% endif %}
+                                    <div class="inside-img-block">
+                                        <button onclick="showSideNavProdDetails({{ prod|json_encode|e('html_attr')}})">{{ app.translations.details }}</button>
+                                        <button onclick="appendToCart($(this).parent().parent(), 'createItem')">{{ app.translations.to_cart }}</button>
+                                    </div>
+                                    <input class="hidden category" value="{{ prod.category }}">
+                                    <input class="hidden category_id" value="{{ prod.category_id }}">
+                                    <input class="hidden id" value="{{ prod.id }}">
+                                    <input class="hidden unit" value="{{ prod.unit }}">
+                                    <input class="hidden price" value="{{ prod.price }}">
+                                    <input class="hidden code" value="{{ prod.code }}">
+                                    <input class="hidden category_location_id" value="{{ prod.category_location_id }}">
+                                    <div class="hidden amount">{{ prod.price }}</div>
+                                    <div class="hidden descr">{{ prod.descr }}</div>
+                                    <div class="hidden qty">
+                                        <input type="number" style="width: 52px; padding-right: 0;" class="form-control"  value="1">
+                                    </div>
+                                </div>
+                                <div class="product-descr-block">
+                                    <p>{{ prod.descr }}</p>
+                                    <p>{{ prod.price|number_format(2) }} {{ app.config.currency }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="background-mask" onclick="$('body').toggleClass('blur-mask');"></div>
+    <div class="modal-product-details">
+        <div class="close-modal-block">
+            <a href="javascript:void(0);" onclick="$('body').toggleClass('blur-mask');">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+        <div class="modal-product-details-body">
+            <div class="product-details-items">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

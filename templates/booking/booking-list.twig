@@ -1,0 +1,59 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <link rel="stylesheet" href="/assets/css/tablesaw.css">
+
+    <script src="/assets/libs/tablesaw.jquery.js"></script>
+    <script src="/assets/libs/tablesaw-init.js"></script>
+    <div class="booking-list-container">
+        <div class="content">
+            {% if booking|length < 1 %}
+                <h1>Booking is Empty</h1>
+            {% else %}
+                <div id="booking_details">
+                    <div class="panel-heading">
+                        <div class="pull-left booking-head-label" style="padding: 7px 0; font-size: 28px;">Booking
+                            list
+                        </div>
+                        <div class="pull-right" id="cart"><a href="/prices/10" class="btn button-basket">
+                                <li class="fa fa-angle-double-left"></li>
+                                Back</a></div>
+                    </div>
+                    <table class="table tablesaw tablesaw-stack"  data-tablesaw-mode="stack">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>ID</th>
+                            <th>Amount</th>
+                            <th>Paid</th>
+                            <th>Date</th>
+                            <th>Delivery type</th>
+                            <th>Delivery address</th>
+                            <th>Delivery date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody class="booking_body_details">
+                        {% for item in booking %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td class="booking_id">{{ item.id }}</td>
+                                <td>{{ item.amount }}</td>
+                                <td>{{ item.paid_amount }}</td>
+                                <td>{{ item.booking_date }}</td>
+                                <td>{{ item.type }}</td>
+                                <td>{{ item.delivery }}</td>
+                                <td>{{ item.d_date }}</td>
+                                <td class="booking-details">
+                                    <a href="/booking/{{ item.base_64 }}" class="btn details book_details">
+                                        Details
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <div class="content">
+        <div class="default-page-container">
+            <div class="user-name-block">
+                <p>Customer details</p>
+                <div class="user-field">
+                    <span>User name:</span>
+                    <p>{{ app.userData.company }}</p>
+                </div>
+                <div class="user-field">
+                    <span>Change name:</span>
+                    <input type="text" id="new-user-name">
+                </div>
+                <button type="submit" class="save-user-change" onclick="saveName();"> Save changes</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

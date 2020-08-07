@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta content="Bonaprezo website. Bonaprezo nature products" name="description"/>
+    {#Meta tags for Facebook sharing start#}
+    <meta property="fb:app_id" content="100667310561658"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="{{ app.request.uri }}"/>
+    <meta property="og:title" content="{{ product.descr }}"/>
+    <meta property="og:description" content="{{ product.remarks }}"/>
+    {% if product.image_id is not null %}
+        <meta property="og:image" content="{{ app.product_link }}{{ product.image_id }}&thumb=1"/>
+    {% endif %}
+
+    {#Meta tags for Facebook sharing end#}
+    {#Meta tags for Twitter sharing start#}
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@flickr"/>
+    <meta name="twitter:title" content="{{ product.descr }}"/>
+    <meta name="twitter:description" content="{{ product.remarks }}"/>
+    {% if product.image_id is not null %}
+        <meta property="twitter:image" content="{{ app.product_link }}{{ product.image_id }}&thumb=1"/>
+    {% endif %}
+    {#Meta tags for Twitter sharing end#}
+    <title>{{ app.title }}</title>
+    <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/images/logos/favicon_60.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/logos/favicon_76.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/logos/favicon_120.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/logos/favicon_152.png">
+
+    <link rel="stylesheet" href="/assets/css/animate.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=17">
+    <link rel="stylesheet" href="/assets/css/notification.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/toastr.min.css">
+    <script src="/assets/libs/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '100667310561658',
+            xfbml: true,
+            version: 'v2.9'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="body-wrap" style="width: 100%">
+    {% include 'blocks/header.twig' %}
+
+    <div class="menu-back" onclick="$('body').toggleClass('menu-opened');"></div>
+    <div class="background-mask" onclick="$('body').toggleClass('blur-mask');"></div>
+    <div class="product-details-container">
+        <div class="content">
+            <div class="row">
+                <div class="col-md-3 col-lg-2 mob-hide" style="padding: 0">
+                    {% include 'blocks/sidebar-menu.twig' %}
+                </div>
+                <div class="col-md-9 col-lg-10">
+                    <div class="product-details-content">
+                        <div class="product-details-img">
+                            <img class="prod_img image_t"
+                                 src="{{ app.product_link }}{{ product.image_id }}"
+                                 alt="img">
+                        </div>
+                        <div class="inputs-block">
+                            <input class="hidden category" value="{{ product.category }}">
+                            <input class="hidden category_id" value="{{ product.category_id }}">
+                            <input class="hidden id" value="{{ product.id }}">
+                            <input class="hidden unit" value="{{ product.unit }}">
+                            <input class="hidden price" value="{{ product.price|number_format(2) }}" id="for-price-details">
+                            <input class="hidden code" value="{{ product.code }}">
+                            <input class="hidden category_location_id" value="{{ product.category_location_id }}">
+                            <div class="hidden img">
+                                <img class="prod_img image_t"
+                                     src="{{ app.product_link }}{{ product.image_id }}&thumb=1"
+                                     alt="img">
+                            </div>
+
+                            <div class="descr" id="modal-descr-details">{{ product.descr }}</div>
+                            <div class="remark product-modal-remarks" style="font-size: 18px; padding: 10px 15px">{{ product.remarks }}</div>
+                            <div class="price" id="modal-price-details" style="padding-bottom: 15px">{{ product.price|number_format(2) }} {{ app.config.currency }}</div>
+                            <input type="number" class="hidden" id="for-price-details" value="{{ product.price|number_format(2) }}">
+
+                            <div class="qty change-qty" id="qty-details">
+                                <button class="plus-minus" id="minus-details">-</button>
+                                <input type="text" id="modal-number-details" class="form-control" value="1">
+                                <button class="plus-minus" id="plus-details">+</button>
+                            </div>
+                            <div class="amount" id="modal-amount-details" style="padding: 15px 0;">
+                                {{ product.price|number_format(2) }} {{ app.config.currency }}
+                            </div>
+
+                            <button id="to_cart" style="max-width: 250px; margin-bottom: 10px" class="button-details-to-cart" onclick="appendToCart($(this).parent(), 'createItem')">To Cart</button>
+                            <div class="sharing-buttons">
+                                <a rel="nofollow" onclick="share_fb(); return false;" target="_blank" id="facebook-sharing"></a>
+                                <a target="_blank" onclick="share_twitter(); return false;" id="twitter-sharing"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'blocks/footer.twig' %}
+</div>
+
+<script>
+    $('#modal-number-details').keyup(function () {
+        var $this = $(this);
+        if ($this.val().length > 3)
+            $this.val($this.val().substr(0, 3));
+    });
+    $('#modal-number-details').keyup(function () {
+        var quantity = $('#modal-number-details').val();
+        var price = $('#for-price-details').val();
+        price = parseFloat(price) * parseFloat(quantity);
+        $('#modal-amount-details').text('');
+        $('#modal-amount-details').text(price.toFixed(2) + ' AED');
+    });
+    $('#plus-details, #prod-plus-details').click(function () {
+        var quantity = $('#modal-number-details').val();
+        quantity++;
+        $('#modal-number-details').val(quantity);
+        var price = $('#for-price-details').val();
+        price = parseFloat(price) * parseFloat(quantity);
+        $('#modal-amount-details').text('');
+        $('#modal-amount-details').text(price.toFixed(2) + ' AED');
+
+    });
+    $('#minus-details, #prod-minus-details').click(function () {
+        var quantity = $('#modal-number-details').val();
+        quantity--;
+        if (quantity <= 1) {
+            quantity = 1;
+            price = parseFloat($('#for-price-details').val());
+            $('#modal-number-details').val(1);
+            $('#modal-amount-details').text(price.toFixed(2) + ' AED');
+        }
+        else {
+            $('#modal-number-details').val(quantity);
+            var price = $('#for-price-details').val();
+            price = parseFloat(price) * parseFloat(quantity);
+            $('#modal-amount-details').text('');
+            $('#modal-amount-details').text(price.toFixed(2) + ' AED');
+        }
+    });
+</script>
+
+<script src="/assets/libs/bootstrap.min.js"></script>
+<script src="/assets/libs/notification.js"></script>
+<script src="/assets/libs/toastr.js"></script>
+<script src="/assets/js/app.js"></script>
+</body>
+</html>

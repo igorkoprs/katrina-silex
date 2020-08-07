@@ -1,0 +1,168 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <link rel="stylesheet" href="/assets/css/select2.css">
+    <link rel="stylesheet" href="/assets/css/dropzone.css">
+    <link rel="stylesheet" href="/assets/css/jquery.datetimepicker.css">
+
+    <script src="/assets/libs/dropzone.js"></script>
+    <script src="/assets/libs/select2.js"></script>
+    <script src="/assets/libs/jquery.datetimepicker.js"></script>
+
+    <div class="custom-cake-container">
+        <div class="content" style="max-width: 1200px">
+            <div class="col-lg-4 col-md-3 col-sm-12 float-left col-contact-details">
+                <p class="custom-general" style="width: 100%;">Contact details</p>
+                <div class="custom-divs">
+                    <span class="custom-span">Name<span style="font-size: 20px;">&#0042;</span></span>
+                    <input type="text" placeholder="Type company or your name" id="customcakecompany"
+                           class="refield custom-inputs"></div>
+                <div class="custom-divs">
+                    <span class="custom-span">Phone<span style="font-size: 20px;">&#0042;</span></span>
+                    <input type="text" placeholder="Phone Number" class="refield custom-inputs" id="customcakecphone"></div>
+                <div class="custom-divs"><span class="custom-span">Email<span style="font-size: 20px;">&#0042;</span></span>
+                    <input type="text" placeholder="Email address" class="refield custom-inputs" id="customcakeemail"></div>
+                <p class="custom-general" style="width: 100%;">Cake Details</p>
+                <div class="custom-divs"><span class="custom-span">Weight, kg<span
+                                style="font-size: 20px;">&#0042;</span></span>
+                    <input type="number" min="1" placeholder="1.5" class="refield custom-inputs"
+                           id="customcakeweight">
+                </div>
+
+            </div>
+            <div class="col-lg-8 col-md-9 col-sm-12 float-left input-col">
+                <p class="custom-general">Delivery</p>
+                <div class="col-md-12 float-left delivery-block">
+                    <ul class="nav nav-tabs">
+                        <li class="tabs-li"><a href="javascript:void(0);" class="type tab-link" id="pickup">Pickup</a></li>
+                        <li class="tabs-li"><a href="javascript:void(0);" class="type tab-link" id="delivery">Delivery</a></li>
+                        <input class="hidden" id="current-tab" value="pickup">
+                    </ul>
+                    <div class="col-md-9 float-left custom-pickup" style="padding-top: 15px;">
+                        <select id="warehouse" class="custom-inputs shops">
+                            <option value="" disabled selected>Select shop</option>
+                            {% for whs in warehouses %}
+                                {% if whs.type == 'station' %}
+                                    {% if whs.pid != '0' and (whs.id == 2 or whs.id == 16 or whs.id == 14) %}
+                                        <option class="war-option"
+                                                value="{{ whs.id }}"> {{ whs.name }}</option>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 float-left custom-pickup" style="padding-top: 15px;">
+                        <div class="icon-time"><img src="/assets/images/icon/time.svg"></div>
+                        <input type="text" class="custom-inputs date" id="ddate" placeholder="When to pickup">
+                    </div>
+                </div>
+                <div class="col-md-12 float-left delivery-block">
+                    <div class="col-lg-3 col-md-6 col-sm-12 float-left custom-delivery" style="padding-top: 15px;">
+                        <select id="cities" onchange="getCityDistricts($(this).val());" class="custom-inputs cities">
+                            <option value="" disabled selected>City</option>
+                            {% for city in cities %}
+                                <option value="{{ city.id }}">{{ city.city }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 float-left custom-delivery" style="padding-top: 15px;">
+                        <select id="districts" class="custom-inputs districts">
+                            <option value="" disabled selected>District</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 float-left custom-delivery" style="padding-top: 15px;">
+                        <input type="text" id="address" class="custom-inputs address" placeholder="Address">
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 float-left custom-delivery" style="padding-top: 15px;">
+                        <div class="icon-time"><img src="/assets/images/icon/time.svg"></div>
+                        <input type="text" class="custom-inputs date" id="ddate2" placeholder="When to delivery">
+                    </div>
+                </div>
+                <div class="col-md-12 float-left">
+                    <div class="col-sm-6 float-left upload-block">
+                        <p class="custom-general" style="padding-top: 15px;">Comments</p>
+                        <div id="comm-div" class="custom-divs">
+                        <textarea placeholder="Special instructions and comments"
+                                  class="refield custom-inputs-textarea"
+                                  id="customcakemessage"></textarea>
+                        </div>
+                        </div>
+                    <div class="col-sm-6 float-left upload-block">
+                        <p class="custom-general" style="padding-top: 15px;">Upload your sample images</p>
+                        <form method="POST" action="/upload" class="dropzone" id="customcakeform"
+                              style="float: left;" enctype="multipart/form-data">
+                            <p class="dz-message">Drag & Drop images here</p>
+                            <p class="dz-message">or</p>
+                            <p class="dz-message">Click on Zone to upload</p>
+                        </form>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-12 float-left get-price-block">
+                    <button class="btn-quotation" id="sendcustomcake" type="submit" style="font-size: 22px; margin-top: 30px">Get the price for
+                        cake
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        Dropzone.autoDiscover = false;
+        var imgmass = new Array();
+        count = 0;
+        $('document').ready(function () {
+            $('#pickup').click(function () {
+                $('.custom-pickup').show();
+                $('.custom-delivery').hide();
+                $('#current-tab').val('pickup');
+                $(this).css('background', '#ec008c').css('color', '#FFFFFF');
+                $('#delivery').css('background', '#eaeaea').css('color', '#32373c');
+            });
+            $('#delivery').click(function () {
+                $('.custom-delivery').show();
+                $('.custom-pickup').hide();
+                $('#current-tab').val('delivery');
+                $(this).css('background', '#ec008c').css('color', '#FFFFFF');
+                $('#pickup').css('background', '#eaeaea').css('color', '#32373c');
+            });
+
+            $('#warehouse, #cities').select2();
+            $('#ddate').datetimepicker({
+                    format: 'd/M/Y H:i',
+                    useSeconds: false,
+                    allowTimes: ['8:00', '9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'],
+                }
+            );
+            $('#ddate2').datetimepicker({
+                    format: 'd/M/Y H:i',
+                    useSeconds: false,
+                    allowTimes: ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00']
+                }
+            );
+
+            var myDropzone = new Dropzone('form#customcakeform',{
+                paramName: "file",
+                maxFilesize: 2,
+                maxFiles: 3,
+                acceptedFiles: ".ai, .eps, .svg, .png, .psd, .pdf, .jpg , .jpeg",
+                autoProcessQueue: true,
+                init: function () {
+                    this.on("sending", function(file, xhr, formData){
+                        formData.append("type", "custom_cake");
+                    });
+                    this.on("success", function(file, response) {
+                        imgmass[count] = response.data_list.filename;
+                        count++;
+                    });
+                }
+            });
+
+            $('#sendcustomcake').on("click", function () {
+                createCustomBooking(imgmass);
+            });
+
+        });
+
+
+
+    </script>
+{% endblock %}

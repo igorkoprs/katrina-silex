@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="5151d448-e8c6-4d97-94ce-928267681d1b" name="hz7.awery.aero (project level)">
+        <fileTransfer accessType="SFTP" host="hz7.awery.aero" port="2218" sshConfigId="cad6ad90-3f10-42b6-84aa-8ae46da045ea" sshConfig="webdev@hz7.awery.aero:2218 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

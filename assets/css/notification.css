@@ -1,0 +1,33 @@
+#message {
+  width: 100%;
+  padding: .7rem;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem
+}
+
+.btn-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%
+}
+
+.btn-wrapper>button {
+  padding: 1rem 1.2rem;
+  width: 33.3%;
+  font-size: 1.2rem;
+  border: none;
+  color: #fff
+}
+
+#default {
+  background-color: #323232
+}
+
+#success {
+  background-color: #8bc34a
+}
+
+#alert {
+  background-color: #d93737
+}

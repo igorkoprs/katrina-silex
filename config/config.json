@@ -1,0 +1,14 @@
+{
+    "host": "https://awery.katrina.ae/booking_cake/index.php",
+    "acmRealm": "katrina",
+    "External_Udb": {
+        "login": "alexandr",
+        "passwd": "alex12345"
+    },
+    "db": {
+        "dbname": "newkatrinasite",
+        "user": "newkatrinasite",
+        "password": "ktA5hdk8M"
+    },
+    "currency" : "AED"
+}

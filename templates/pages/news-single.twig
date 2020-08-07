@@ -1,0 +1,22 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <div class="content">
+        <div class="news-container">
+            <div class="news-list-item" style="border-top: 0">
+                <a href="/news/{{ news.slug }}" class="news-item-title">
+                    {{ news.title }}
+                </a>
+                <a href="/news" class="all-news">All news</a>
+                <p class="news-item-date">{{ news.published }}</p>
+                <div class="news-item-content">
+                    <a class="news-item-img">
+                        <img src="https://newkatrinasite.awery.com/uploads/news/{{ news.image }}" style="height: auto">
+                    </a>
+                    <div class="news-single-descr">
+                        {{ news.content|raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

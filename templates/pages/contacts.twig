@@ -1,0 +1,239 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <link href="https://fonts.googleapis.com/css?family=Signika:300,400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,400i,700,900" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrDA4Amw5eIA5JT57UcBJ2HIwyRQUrVX8&sensor=false&libraries=places"></script>
+
+    <div class="contacts-page-container">
+        <div class="content">
+            <div class="col-md-6 kiosk-col float-left">
+                <div class="item-contact-building">
+                    <p class="title-type-building">CALL CENTER</p>
+                    <p class="contact-city-address">Dubai Investment Park, Dubai</p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Dubai-Investment-Park-Dubai-small.png"></div>
+                            <input type="hidden" class="city-address" value="Dubai Investment Park, Dubai">
+                            <input type="hidden" class="building-address" value="Dubai Investment Park Second">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/uYYxR8C4qMD6cnV87">Dubai Investment Park Second</a>
+                            <a class="contact-tel" href="tel:04-251 55 77">04-251 55 77</a>
+                            <a class="contact-tel" href="tel:04-813 23 33">04-813 23 33</a>
+                            <a class="contact-whatsapp" href="tel:050 477 2947">050 477 2947</a>
+                            <a class="contact-email" href="mailto:orders@katrinasweets.com">orders@katrinasweets.com</a>
+                            <a class="contact-oclock">7 a.m till 12 midnight every day</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-contact-building">
+                    <p class="title-type-building">COFFEE-SHOPS</p>
+                    <p class="contact-city-address">Mirdif, Dubai</p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Mirdif-Dubai-small.png"></div>
+                            <input type="hidden" class="city-address" value="Mirdif, Dubai">
+                            <input type="hidden" class="building-address" value="Al Barajeel Complex, Street 47, Shop # 7003">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/upJPbibnkxMRzDa16">Al Barajeel Complex, Street 47, Shop # 7003</a>
+                            <a class="contact-tel" href="tel:04-813 23 21">04-813 23 21</a>
+                            <a class="contact-tel" href="tel:04-284 71 82">04-284 71 82</a>
+                            <a class="contact-whatsapp" href="tel:050 648 6147">050 648 6147</a>
+                            <a class="contact-email" href="mailto:mirdifbranch@katrinasweets.com">mirdifbranch@katrinasweets.com</a>
+                            <a class="contact-oclock">10 a.m till 11 midnight every day</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-contact-building">
+                    <p class="contact-city-address" style="margin-top: 25px">Al Barsha, Dubai</p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Al-Barsha-Dubai-small.png"></div>
+                            <input type="hidden" class="city-address" value="Al Barsha, Dubai">
+                            <input type="hidden" class="building-address" value="Saratoga Building B, Street 4B, Al Barsha">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/H62MLUGr99z3ettw5">Saratoga Building B, Street 4B, Al Barsha</a>
+                            <a class="contact-tel" href="tel:04-379 47 12">04-379 47 12/ 04-399 47 07</a>
+                            <a class="contact-phone-whatsapp" href="tel:050 648 6147">056-573 17 27</a>
+                            <a class="contact-email" href="mailto:branchalbarsha@katrinasweets.com">branchalbarsha@katrinasweets.com</a>
+                            <a class="contact-oclock">10 a.m till 11 midnight every day</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-contact-building">
+                    <p class="contact-city-address" style="margin-top: 35px;">Al Rashidiya, Bin Sougat Centre, Dubai</p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Al-Rashidiya-Bin-Sougat-Centre-Dubai-small.png"></div>
+                            <input type="hidden" class="city-address" value="Al Rashidiya, Bin Sougat Centre, Dubai">
+                            <input type="hidden" class="building-address" value="Airport road, Al Rashidiya">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/25VQ8CxwYf8vvAYr5">Airport road, Al Rashidiya</a>
+                            <a class="contact-tel" href="tel:04-284 09 61">04-284 09 61</a>
+                            <a class="contact-phone-whatsapp" href="tel:050 648 6147">050-368 2520</a>
+                            <a class="contact-whatsapp" href="tel:056-756 83 90">056-756 83 90</a>
+                            <a class="contact-email" href="mailto:binsougat@katrinasweets.com">binsougat@katrinasweets.com</a>
+                            <a class="contact-oclock">8:00 a.m. till 8:00 p.m. temporary</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 kiosk-col float-left">
+                <div class="item-contact-building">
+                    <p class="title-type-building">RETAIL KIOSKS</p>
+                    <p class="contact-city-address">Kiosk at Barsha Mall, Al Barsha, Dubai</p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Kiosk-at-Barsha-Mall-Al-Barsha-Dubai-small.png"></div>
+                            <input type="hidden" class="city-address" value="Kiosk at Barsha Mall, Al Barsha, Dubai">
+                            <input type="hidden" class="building-address" value="Al Barsha 1, Street 23">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/k9b2cH5YM8sexHb36">Al Barsha 1, Street 23</a>
+                            <a class="contact-tel" href="tel:04-347 10 03">04-347 10 03</a>
+                            <a class="contact-phone-whatsapp" href="tel:050 656 01 56">050 656 01 56</a>
+                            <a class="contact-email" href="mailto:kioskalbarsha@katrinasweets.com">kioskalbarsha@katrinasweets.com</a>
+                            <a class="contact-oclock">Sat – Wed 9 a.m till 11 p.m</a>
+                            <a class="contact-oclock-break">
+                                Thu – Fri 9 a.m till 12 midnight<br>
+                                Break time 12 p.m till 12.30 p.m<br>
+                                7 p.m till 7.30 p.m
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-contact-building">
+                    <p class="contact-city-address">Kiosk at Emirates Coop, Al Twar, Dubai</p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Kiosk-at-Emirates-Coop-Al-Twar-Dubai-small.png"></div>
+                            <input type="hidden" class="city-address" value="Kiosk at Emirates Coop, Al Twar, Dubai">
+                            <input type="hidden" class="building-address" value="Al Nahda road, Al Twar 3">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/vcTGwvj7dsTNFVFA7">Al Nahda road, Al Twar 3</a>
+                            <a class="contact-phone-whatsapp" href="tel:056-640 82 92">056-640 82 92</a>
+                            <a class="contact-email" href="mailto:kioskaltwar@katrinasweets.com">kioskaltwar@katrinasweets.com</a>
+                            <a class="contact-oclock">Sat – Wed 9 a.m till 11 p.m</a>
+                            <a class="contact-oclock-break">
+                                Thu – Fri 9 a.m till 12 midnight<br>
+                                Break time 12 p.m till 12.30 p.m<br>
+                                7 p.m till 7.30 p.m
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-contact-building">
+                    <p class="contact-city-address">Kiosk at Union Coop, Ras Al Khor, Dubai <span>Fruit & Vegetable Market</span></p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Kiosk-at-Union-Coop-Ras-Al-Khor-Dubai-small.jpg"></div>
+                            <input type="hidden" class="city-address" value="Kiosk at Union Coop, Ras Al Khor, Dubai">
+                            <input type="hidden" class="building-address" value="Ras Al Khor, Union Coop">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/yFiXCcr3S4s1XooB8">Ras Al Khor, Union Coop</a>
+                            <a class="contact-phone-whatsapp" href="tel:050-195 33 64">050-195 33 64</a>
+                            <a class="contact-email" href="mailto:kioskalaweer@katrinasweets.com">kioskalaweer@katrinasweets.com</a>
+                            <a class="contact-oclock">Sat – Wed 9 a.m till 10:30 p.m</a>
+                            <a class="contact-oclock-break">
+                                Thu – Fri 9 a.m to 11 midnight<br>
+                                Break time 12 p.m till 12.30 p.m
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-contact-building">
+                    <p class="contact-city-address">Kiosk at Union Coop, Umm Suqeim, Dubai</p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Kiosk-at-Union-Coop-Umm-Suqeim-Dubai-small.jpg"></div>
+                            <input type="hidden" class="city-address" value="Kiosk at Union Coop, Umm Suqeim, Dubai">
+                            <input type="hidden" class="building-address" value="Kiosk at Union Coop, Umm Suqeim">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/FNJPTd7VWtc3X3qb9">Kiosk at Union Coop, Umm Suqeim</a>
+                            <a class="contact-tel" href="tel:04-321 95 03">04-321 95 03</a>
+                            <a class="contact-phone-whatsapp" href="tel:050-195 44 71">050-195 44 71</a>
+                            <a class="contact-email" href="mailto:kioskummsuqeim@katrinasweets.com">kioskummsuqeim@katrinasweets.com</a>
+                            <a class="contact-oclock">Sat – Wed 9 a.m till 11 p.m</a>
+                            <a class="contact-oclock-break">
+                                Thu – Fri 9 a.m till 12 midnight<br>
+                                Break time 12 p.m till 12.30 p.m<br>
+                                7 p.m till 7.30 p.m
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-contact-building">
+                    <p class="contact-city-address">Kiosk at Dalma Mall, Abu Dhabi</p>
+                    <div class="item-contact-details">
+                        <div class="image-building">
+                            <div><img src="/assets/images/contacts-building/Kiosk-at-Dalma-Mall-Abu-Dhabi-small.jpg"></div>
+                            <input type="hidden" class="city-address" value="Kiosk at Dalma Mall, Abu Dhabi">
+                            <input type="hidden" class="building-address" value="19th Street, Dalma Mall, Abu Dhabi">
+                        </div>
+                        <div class="contact-details-content">
+                            <a class="contact-address" href="https://goo.gl/maps/5GCtKRPHoRoBmQqXA">19th Street, Dalma Mall, Abu Dhabi</a>
+                            <a class="contact-phone-whatsapp" href="tel:050 874 91 69">050 874 91 69</a>
+                            <a class="contact-email" href="mailto:dalmamall@katrinasweets.com">dalmamall@katrinasweets.com</a>
+                            <a class="contact-oclock">
+                                Sat – Wed 10 a.m till 10 p.m<br>
+                                Thu – Fri 10 a.m till 12 midnight
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap-map">
+                <div class="adress-map-block">
+                    <p class="title-map-block">Locations</p>
+                    <ul id="slide-panel">
+                        <li class="menu-map" data-mapkey="0">
+                            <b>Mirdif</b>
+                            <a class="map-li">Al Barajeel Complex, Street 47, Shop # 7003</a>
+                        </li>
+                        <li class="menu-map" data-mapkey="1">
+                            <b>Saratoga Building B, Street 4B, Al Barsha</b>
+                            <a class="map-li">Saratoga Building B, Street 4B, Al Barsha</a>
+                        </li>
+                        <li class="menu-map" data-mapkey="2">
+                            <b>Al Rashidiya, Bin Sougat Centre</b>
+                            <a class="map-li">Airport road, Al Rashidiya</a>
+                        </li>
+                        <li class="menu-map" data-mapkey="3">
+                            <b>Kiosk at Barsha Mall</b>
+                            <a class="map-li">Al Barsha 1, Street 23</a>
+                        </li>
+                        <li class="menu-map" data-mapkey="4">
+                            <b>Kiosk at Emirates Coop, Al Twar 3</b>
+                            <a class="map-li">Al Nahda road, Al Twar 3</a>
+                        </li>
+                        <li class="menu-map" data-mapkey="5">
+                            <b>Kiosk at Union Coop, Al Aweer</b>
+                        </li>
+                        <li class="menu-map" data-mapkey="6">
+                            <b>Kiosk at Union Coop, Umm Suqeim</b>
+                        </li>
+                    </ul>
+                </div>
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-lg" id="contact-building-image" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="/" class="modal-building-image">
+                    <p class="modal-city-address"></p>
+                    <p class="modal-building-address"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/contacts.js"></script>
+{% endblock %}

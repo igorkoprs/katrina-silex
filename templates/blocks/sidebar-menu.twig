@@ -1,0 +1,27 @@
+{#Menu categories#}
+<div class="sidebar-menu-container">
+    <div id="menu-categories-fixed">
+            <ul id="sidebar-menu-dropdown">
+                {% for categories in app.categories %}
+                    <li class="sidebar-link-wrap">
+                        {% if categories.children|length == 0 %}
+                            <a href="/prices/{{ categories.id }}"> {{ categories.name }} </a>
+                        {% else %}
+                            <div class="hidden-dropdown">
+                                <span>{{ categories.name }}</span>
+                                <ul class="sidebar-children-dropdown">
+                                    {% for child in categories.children %}
+                                        <li>
+                                            <a href="/prices/{{ child.id }}">{{ child.name }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        <div class="clearfix"></div>
+    </div>
+</div>
+{#Menu categories#}

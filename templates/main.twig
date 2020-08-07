@@ -1,0 +1,115 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <link rel="stylesheet" href="/assets/css/slick.css">
+    <link rel="stylesheet" href="/assets/css/slick-theme.css">
+    <script src="/assets/libs/slick.min.js"></script>
+
+    <div class="main-container">
+        <div class="content" style="position: relative">
+            <div class="slider-label-block">
+                <h1>
+                    {{ app.translations.katrina_sweets_confectionery }}
+                </h1>
+                <p>
+                    The individually-designed cakes
+                </p>
+            </div>
+        </div>
+        <div class="main-slide-container" style="display: none">
+            <div class="main-slide-item">
+                <img src="/assets/images/main-slider/slide1.jpg">
+            </div>
+            <div class="main-slide-item">
+                <img src="/assets/images/main-slider/slide2.jpg">
+            </div>
+            <div class="main-slide-item">
+                <img src="/assets/images/main-slider/slide3.jpg">
+            </div>
+            <div class="main-slide-item">
+                <img src="/assets/images/main-slider/slide4.jpg">
+            </div>
+        </div>
+    </div>
+    <div class="main-our-products">
+        <div class="content">
+            <div class="content-categories-container">
+                <div class="striking-title">
+                    <hr>
+                    <h1 class="title-categories">{{ app.translations.our_products }}</h1>
+                    <hr>
+                </div>
+                <div class="categories-products-list row">
+                    <div class="col-md-4 col-sm-6">
+                        <a class="main-category-link" href="/prices/15">
+                            <img src="/assets/images/our-products/customised-cake.png">
+                            <div class="category-img-title">
+                                <h1>Customize cake</h1>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <a class="main-category-link" href="/prices/12">
+                            <img src="/assets/images/our-products/cakes.png">
+                            <div class="category-img-title">
+                                <h1>Cakes</h1>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <a class="main-category-link" href="/prices/10">
+                            <img src="/assets/images/our-products/pastry.png">
+                            <div class="category-img-title">
+                                <h1>Pastries</h1>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <a class="main-category-link" href="/prices/13">
+                            <img src="/assets/images/our-products/bread.png">
+                            <div class="category-img-title">
+                                <h1>Breads</h1>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <a class="main-category-link" href="/prices/14">
+                            <img src="/assets/images/our-products/snack.png">
+                            <div class="category-img-title">
+                                <h1>Snacks</h1>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <a class="main-category-link" href="/prices/11">
+                            <img src="/assets/images/our-products/cookies-resize.png">
+                            <div class="category-img-title">
+                                <h1>Cookies</h1>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="striking-title">
+                    <hr>
+                    <h1 class="title-categories">{{ app.translations.our_news }}</h1>
+                    <hr>
+                </div>
+                <a class="news-image-link" href="/news">
+                    <img src="/assets/images/main-news-link.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="main-cafe-bottom">
+            <div class="content">
+                <div class="main-about-katrina">
+                    <a class="title-bottom-about" href="/companyprofile">{{ app.translations.katrina_sweets_confectionery }}</a>
+                    <p>{{ app.translations.main_bottom_about }}</p>
+                    <div style="display: inline-block;width: 100%; text-align: right">
+                        <a class="read-more" href="/companyprofile">{{ app.translations.read_more }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

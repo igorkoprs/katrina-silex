@@ -1,0 +1,121 @@
+<header>
+    <div class="fixed-header-container">
+        <div class="content">
+            <div class="header-menu">
+                <a class="header-logo-block" href="/">
+                    <img src="/assets/images/logos/logo.svg">
+                </a>
+                <div class="header-menu-container">
+                    <menu class="menu-header-links">
+                        <div class="menu-links-item menu-mob-logo">
+                            <a class="" href="/">
+                                <img src="/assets/images/logos/logo.svg">
+                            </a>
+                        </div>
+                        <div class="menu-links-item" style="text-align: left; padding-left: 0">
+                            <a href="javascript:void(0)" class="parent-link"> {{ app.translations.product }}</a>
+                            <ul class="header-menu-dropdown">
+                                {% for categories in app.categories %}
+                                    <li class="link-wrap">
+                                        {% if categories.children|length == 0 %}
+                                            <a href="/prices/{{ categories.id }}"> {{ categories.name }} </a>
+                                        {% else %}
+                                            <div class="hidden-dropdown">
+                                                <span>{{ categories.name }}</span>
+                                                <ul class="header-children-dropdown">
+                                                    {% for child in categories.children %}
+                                                        <li>
+                                                            <a href="/prices/{{ child.id }}">{{ child.name }}</a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% for menu in app.menu %}
+                            <div class="menu-links-item">
+                                {% if menu.children|length > 0 %}
+                                    <a href="javascript:void(0);" class="parent-link">{{ menu.name }}</a>
+                                    <ul class="header-menu-dropdown">
+                                        {% for menuChild in menu.children %}
+                                            <li class="link-wrap">
+                                                <a href="/{{ menuChild.slug }}"> {{ menuChild.name }} </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <a href="/{{ menu.slug }}">{{ menu.name }}</a>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </menu>
+                    <div class="top-communicate">
+                        <a class="toggle-menu" onclick="$('body').toggleClass('opened-menu')"></a>
+                        <div class="user-basket-block">
+                            <div class="header-user-login">
+                                <button id="login-show" onclick="$('.login-block-dropdown').toggleClass('active');">
+                                    <img src="/assets/images/icon/user-login.svg">
+                                    <span id="header-btn-login-text">
+                                            {% if app.userData is not defined %}
+                                                <span style="text-transform: uppercase">{{ app.translations.login }}</span>
+                                            {% else %}
+                                                <span>{{ app.userData.company }}</span>
+                                            {% endif %}
+                                    </span>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="login-block-dropdown">
+                                    {% if app.userData is not defined %}
+                                        <li><a href="/login" id="drop_login">{{ app.translations.sign_in_up }}</a></li>
+                                    {% else %}
+                                        <li><a href="javascript:void(0);" id="drop_login" onclick="Logout()">{{ app.translations.logout }}</a></li>
+                                        <li><a href="/booking" id="drop_login" onclick="">{{ app.translations.booking_list }}</a></li>
+                                        <li><a href="/user-profile" id="drop_login" onclick="">{{ app.translations.user_profile }}</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <a class="basket-header" href="/basket">
+                                <img src="/assets/images/icon/basket.svg">
+                               {# {% if app.carts.count|length > 0 %}
+                                    <span id="amount-purchases"> {{ app.carts.count }} ({{ app.carts.amount }} {{ app.config.currency }})</span>
+                                {% else %}
+                                    <span id="amount-purchases"> 0 (0 {{ app.config.currency }})</span>
+                                {% endif %}#}
+                            </a>
+                        </div>
+                        <div class="header-search-block">
+                            <a class="icon-search" onclick="searchProducts($('.header-search').val())"></a>
+                            <input type="text" class="header-search" placeholder="{{ app.translations.search }}"
+                                    autocomplete="new-password">
+                            <div id="search-result-container">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="background-open-menu" onclick="$('body').toggleClass('opened-menu')"></div>
+</header>
+
+<div class="modal fade bd-example-modal-lg" id="delivery-conditions" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3>Dear Valued Customer!</h3>
+                <p>Please, be aware about terms of delivery from our web-shop: </p>
+                <ol>
+                    <li>Minimum amount order and delivery charge depend on the district of delivery;</li>
+                    <li>We deliver SAME DAY before 7 PM in several districts, if items are available in the nearest shop;</li>
+                    <li>We deliver our regular cakes to you in 1 day if you place order before 5 PM;</li>
+                    <li>Customized cakes with design need from 1 to 4 days for production, depending on the complexity and week day.</li>
+                </ol>
+                <button type="button" class="delivery-close-modal-button close" data-dismiss="modal">Agree</button>
+            </div>
+        </div>
+    </div>
+</div>

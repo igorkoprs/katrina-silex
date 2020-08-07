@@ -1,0 +1,17 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <link rel="stylesheet" href="/assets/css/jquery.datetimepicker.css">
+    <script src="/assets/libs/jquery.datetimepicker.js"></script>
+
+    <div class="login-container">
+        {% include 'blocks/auth-block.twig' %}
+    </div>
+
+    <script>
+        $('#user-birthday').datetimepicker({
+            format: 'd-m',
+            changeYear: false,
+            pickTime: false
+        });
+    </script>
+{% endblock %}

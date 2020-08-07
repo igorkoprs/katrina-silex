@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta property="og:title" content="{{ app.title }}" />
+        <meta property="og:description" content="{{ app.description }}" />
+        <meta property="og:url" content="{{ app.request.uri }}"/>
+        <meta property="og:image" content="http://https://katrina.ae/wp-content/themes/katrina/upload/images/Katrina_logo_small.jpg">
+        <meta name="google-site-verification" content="nrcFuFzcJOoluDgyNT5z5VZ92d0Vx4LGJzZtKxCCfjM" />
+        <title>{{ app.title }}</title>
+        <link rel="stylesheet" href="/assets/css/style.css?v=17">
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/css/notification.css">
+        <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/assets/css/sweetalert.css">
+        <link rel="stylesheet" href="/assets/css/toastr.min.css">
+        <link rel="stylesheet" href="/assets/css/intlTelInput.css">
+        <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/png">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+        <script src="/assets/libs/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <script src="/assets/libs/infobubble.js"></script>
+    </head>
+    <body>
+        <div class="body-wrap" style="width: 100%">
+            {% include 'blocks/header.twig' %}
+
+            {% block content %}
+            {% endblock %}
+
+            <div class="clearfix"></div>
+
+            {% include 'blocks/footer.twig' %}
+        </div>
+        <script src="/assets/libs/bootstrap.min.js"></script>
+        <script src="/assets/libs/notification.js"></script>
+        <script src="/assets/libs/jquery.maskedinput.min.js"></script>
+        <script src="/assets/libs/sweetalert.min.js"></script>
+        <script src="/assets/libs/toastr.js"></script>
+        <script src="/assets/libs/utils.js"></script>
+        <script src="/assets/libs/intlTelInput.min.js"></script>
+        <script src="/assets/js/app.js"></script>
+    </body>
+</html>

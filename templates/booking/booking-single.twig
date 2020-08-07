@@ -1,0 +1,205 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <link rel="stylesheet" href="/assets/css/tablesaw.css">
+
+    <script src="/assets/libs/tablesaw.jquery.js"></script>
+    <script src="/assets/libs/tablesaw-init.js"></script>
+
+    <div class="booking-list-container">
+        <div class="content">
+            {% if app.errors is empty %}
+                <div id="booking_details">
+                    <div class="panel-heading">
+                        <div class="pull-left booking-head-label" style="padding: 7px 0; font-size: 28px;">Booking
+                            details
+                        </div>
+                        <div class="pull-right" id="cart" style="margin-top: 10px"><a href="/booking" class="btn button-basket">
+                                <li class="fa fa-angle-double-left"></li>
+                                Back</a></div>
+                    </div>
+                    <table class="table tablesaw tablesaw-stack">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Delivery type</th>
+                            <th>Delivery date</th>
+                            <th>Delivery address</th>
+                            <th>Amount</th>
+                            <th>Paid</th>
+                            <th>Discount</th>
+                            <th>Paid left</th>
+                        </tr>
+                        </thead>
+                        <tbody class="booking_body_details">
+                        <tr>
+                            <td>
+                                <b class="tablesaw-cell-label">ID</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.id }}
+                                <input type="hidden" id="booking_id_for_pay" value="{{ details.booking.id }}">
+                                </span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Date:</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.booking_date }}</span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Status:</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.status }}</span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Delivery type:</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.type }}</span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Delivery date:</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.d_date }}</span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Delivery address:</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.delivery }}</span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Amount:</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.amount }}</span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Paid:</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.paid_amount }}</span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Discount:</b>
+                                <span class="tablesaw-cell-content">{{ details.booking.discount }}</span>
+                            </td>
+                            <td>
+                                <b class="tablesaw-cell-label">Paid left:</b>
+                                <span class="tablesaw-cell-content" id="balance-cell">
+                            {{ details.booking.cost }}
+                        </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="orders_all">
+                    <div class="panel panel-default">
+                        {% for ord_key,order in details.orders %}
+                            <div class="panel-heading">
+                                <h4 style="width: 100%; text-align: left;">Details of order:</h4>
+                            </div>
+                            <div class="panel-body">
+                                <table class="table tablesaw tablesaw-stack">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2" style="width: 50%;"></th>
+                                        <th style="width: 10%; text-align: left;">Size</th>
+                                        <th style="width: 10%; text-align: left;">Code</th>
+                                        <th style="width: 10%; text-align: left;">QTY</th>
+                                        <th style="width: 10%; text-align: left;">Price</th>
+                                        <th style="width: 10%; text-align: left;">Amount</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="orders_body_details_' + orders[key].id + '">
+                                    {% for item in order.items %}
+                                        <tr>
+                                            <td style="text-align: left; vertical-align: middle;" class="w15ab">
+                                                <span class="tablesaw-cell-content">{{ item.category }}</span>
+                                            </td>
+                                            <td style="text-align: left; vertical-align: middle;">
+                                        <span class="tablesaw-cell-content">{{ item.product_descr }}</span>
+                                            </td>
+                                            <td style=" vertical-align: middle;">
+                                                <b class="tablesaw-cell-label">Size:</b>
+                                                <span class="tablesaw-cell-content">{% if item.size is defined %}{{ item.size }} {% endif %}</span>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <b class="tablesaw-cell-label">Code:</b>
+                                                <span class="tablesaw-cell-content">{{ item.code }}</span>
+                                            </td>
+                                            <td style=" vertical-align: middle;">
+                                                <b class="tablesaw-cell-label">QTY:</b>
+                                                <span class="tablesaw-cell-content tablesaw-cell-number">{{ item.qty|number_format(2) }}</span>
+                                            </td>
+                                            <td style=" vertical-align: middle;">
+                                                <b class="tablesaw-cell-label">Price:</b>
+                                                <span class="tablesaw-cell-content tablesaw-cell-number">{{ item.price|number_format(2) }}</span>
+                                            </td>
+                                            <td style="vertical-align: middle;">
+                                                <b class="tablesaw-cell-label">Amount:</b>
+                                                <span class="tablesaw-cell-content tablesaw-cell-number">{{ item.amount }}</span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td style="vertical-align: middle; font-weight: bold; text-align: left!important;"
+                                            class="taabs">
+                                            <b class="tablesaw-cell-label">Subtotal:</b>
+                                            <span class="tablesaw-cell-content tablesaw-cell-number">
+                                {{ details.booking.cost }} {{ app.config.currency }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7">Order {{ loop.index }}: {{ order.descr }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endfor %}
+                        <div style="width: 100%; margin-top: 20px;">
+                            <div class="table_line">
+                                <img src="/assets/images/table_line.png" alt="table_line"
+                                     style="width: 100%; min-height: 1px;">
+                            </div>
+                            <div style="float:left; font-weight: bold; font-size: 17px; margin-left: 15px;">Grand Total:
+                            </div>
+                            <div style="float:right; font-weight: bold; font-size: 17px; margin-right: 15px;" id="gt">
+                                {{ details.booking.cost }}
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        {% if details.booking.invoice_id %}
+                            <div style="width: 100%; border-top:1px solid #000000; margin: 20px 0;" id="pay">
+                                <div class="clearfix"></div>
+                                <a id="clickPay" class="btn btn-default pull-right" style="margin: 10px; cursor:pointer;">Confirm</a>
+                                <input type="number" min="{{ details.booking.min_pay }}" step="1" max="{{ details.booking.cost }}" value="{{ details.booking.cost }}" placeholder="Pay amount" class="form-control"
+                                       id="pam" style="width: 200px; margin: 10px; display: inline-block;">
+                                <button class="btn btn-default" style="margin: 10px; display: inline-block;" id="p100"
+                                        onclick="$('#pam').val($(this).data('value'));" data-value="{{ details.booking.cost }}">100%
+                                </button>
+                                <button class="btn btn-default" style="margin: 10px; display: inline-block;" id="p75"
+                                        onclick="$('#pam').val($(this).data('value'));" data-value="{{ (details.booking.cost * 0.75)|number_format(2) }}">75%
+                                </button>
+                                <button class="btn btn-default" style="margin: 10px; display: inline-block;" id="p50"
+                                        onclick="$('#pam').val($(this).data('value'));" data-value="{{ (details.booking.cost * 0.5)|number_format(2) }}">50%
+                                </button>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div id="load"
+                                 style="display: none; font-size: 25px; width:100%; border-top:1px solid #000000; margin-top: 20px; padding-top: 10px;">
+                                <i class="fa fa-spinner fa-spin pull-right"></i>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div id="pay_merchant" style="display: none; width:100%; margin: 20px 0; text-align: center;">
+                                <form action="https://www.timesofmoney.com/direcpay/secure/PaymentTransactionServlet"
+                                      style="float: left;width:50%;text-align: right;display: none;"
+                                      method="post" id="networkonline_checkout" name="networkonline_checkout">
+                                    <input type="submit" class="btn btn-success" value="Pay by credit card" name="suba"
+                                           id="sub">
+                                </form>
+
+                                <div style="float:left;width: 100%;margin-bottom: 20px;text-align: center;">
+                                    <input type="submit" class="btn btn-success" value="Pay new by credit card" name="suba"
+                                           style="font-size: 15px;font-weight: 700;margin: 10px;border-radius: 5px;padding: 5px 12px;"
+                                           id="migs_sub">
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

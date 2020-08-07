@@ -1,0 +1,277 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <link rel="stylesheet" href="/assets/css/tablesaw.css">
+    <link rel="stylesheet" href="/assets/css/select2.css">
+    <link rel="stylesheet" href="/assets/css/jquery.datetimepicker.css">
+
+    <script src="/assets/libs/select2.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBrDA4Amw5eIA5JT57UcBJ2HIwyRQUrVX8&sensor=false&libraries=places"></script>
+    <script src="/assets/libs/jquery.datetimepicker.js"></script>
+    <script src="/assets/libs/tablesaw.jquery.js"></script>
+    <script src="/assets/libs/tablesaw-init.js"></script>
+
+    <div class="basket-container">
+        {% if count == 0 %}
+            <div content="content">
+                <div class="cart-empty">
+                    <p >
+                        {{ app.translations.cart_empty }}
+                    </p>
+                </div>
+            </div>
+        {% else %}
+            <div class="content">
+                <div class="cart-heading">
+                    <a href="/prices/10" class="button-basket" style="float: left">
+                        <i class="fa fa-angle-double-left"></i> Back
+                    </a>
+                    <a href="javascript:void(0);" class="button-basket" onclick="clearCart();" style="float: right">Clear
+                        cart</a>
+                </div>
+                <div class="cart-details">
+                    <table class="table tablesaw tablesaw-stack" data-tablesaw-mode="stack">
+                        <thead class="cart-head">
+                        <tr>
+                            <th>Image</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th style="text-align: center;">QTY</th>
+                            <th>Price</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody class="cart-body-items">
+                        {% for custom_cakes in cart.cc %}
+                        <tr>
+                            <td colspan="2"
+                                style="text-align: left; font-weight: bold; font-size: 17px;">{{ custom_cakes.name }}</td>
+                            <td colspan="3" style="text-align: left; font-weight: bold; font-size: 17px;">
+                                <input type="text" id="cc_c_{{ custom_cakes.id }}" placeholder="Some notes"
+                                       class="form-control">
+                            </td>
+                            <td class="details"><a href="#" class="btn btn-default"
+                                                   onclick="removeCakeFromCart({{ custom_cakes.id }});">Rem</a></td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                        {% for item in cart.prices %}
+                            <tr class="basket-item-{{ item.code }}">
+                                <td class="cart-image">{{ item.img|raw }}</td>
+                                <td class="category" style="vertical-align:middle">
+                                    {{ item.category }}<br>
+                                    <b> {{ item.descr }}</b>
+                                    <input type="hidden" name="cat_id" value="{{ item.id }}">
+                                    <input type="hidden" name="unit" value="{{ item.unit }}">
+                                    <input type="hidden" name="price" value="{{ item.starterprice }}" class="price">
+                                    <input type="hidden" name="descr" value="{{ item.descr }}">
+                                    <input type="hidden" name="details" value="{{ item.details }}">
+                                    <input type="hidden" class="code" name="code" value="{{ item.code }}">
+                                </td>
+                                <td class="price" id="price-basket"><strong>{{ item.starterprice }} {{ app.config.currency }}</strong></td>
+                                <td class="qty qty-basket">
+                                    <div class="btn-qty-block">
+                                        <button class="plus-minus-basket minus-basket"
+                                                onclick="changeCart('.basket-item-{{ item.code }}', 'minus')">
+                                            <img src="/assets/images/icon/remove.png" alt="remove">
+                                        </button>
+                                        <input type="text" class="number-basket" value="{{ item.qty }}">
+                                        <button class="plus-minus-basket plus-basket"
+                                                onclick="changeCart('.basket-item-{{ item.code }}', 'plus')">
+                                            <img src="/assets/images/icon/add.png" alt="add">
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="amount-basket"><strong class="amount">{{ item.amount }} {{ app.config.currency }}</strong></td>
+                                <td class="details">
+                                    <a href="javascript:void(0);" class="btn btn-delete-item"
+                                       onclick="removePriceFromCart({{ item.id }})">
+                                        <img src="/assets/images/icon/delete.svg">
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="10" id="basket-total" style="font-weight: bold;text-align: center;"
+                                data-total="{{ amount }}">Total Order: {{ amount }} {{ app.config.currency }}</td>
+                        </tr>
+                    </table>
+
+                    <div class="table_line">
+                        <img src="/assets/images/table_line.png" alt="table_line"
+                             style="width: 100%; min-height: 1px;vertical-align: top;">
+                    </div>
+                </div>
+            </div>
+            {% if app.userData is not defined %}
+                {% include 'blocks/auth-block.twig' %}
+            {% else %}
+                <div class="content">
+                    <div class="proceed-order" style="float:left; width: 100%; ">
+                        <div class="notes">
+                            <div class="col-md-12 col-sm-12 cnt-f">
+                                <label class="descr_lab" for="name-ord">Name</label>
+                                <input type="text" class="custom-inputs" id="name-ord" value="" style="width: 100%">
+                            </div>
+                            <div class="col-md-12 col-sm-12 cnt-f">
+                                <label class="descr_lab" for="email-ord">Email</label>
+                                <input type="text" class="custom-inputs" id="email-ord" value="" style="width: 100%">
+                            </div>
+
+                            <div class="col-md-12 col-sm-12">
+                                <!-- <label class="descr_lab" for="prices_notes" style="width:100%;">Message on your cake
+                                     (free) or other comments</label>-->
+                                <textarea id="prices_notes"
+                                          class="form-control auth_text"
+                                          cols="40"
+                                          rows="11"
+                                          placeholder="Message on your cake (free) or other comments"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="deliver">
+                            <div class="col-md-12 col-sm-12">
+                                <label class="descr_lab" style="width:100%;">Delivery</label>
+                                <div class="pickup_new" style="float: left; width: 100%;padding: 10px 0;">
+                                    <input type="radio" class="type" name="type" id="pickup" value="pickup"/>
+                                    <label for="pickup" style="width: 100%;">
+                                        <span id="pickup_span"></span>Pickup</label>
+                                    <div class="col-md-8 col-sm-8 float-left pickup pickup-hidden"
+                                         style="padding: 10px 10px 10px 15px;">
+                                        <select id="warehouse" class="form-control">
+                                            {% for whs in warehouses %}
+                                                {% if whs.type == 'station' %}
+                                                    {% if whs.pid != '0' and (whs.id == 2 or whs.id == 16 or whs.id == 14) %}
+                                                        <option class="war-option"
+                                                                value="{{ whs.id }}"> {{ whs.name }}</option>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 float-left pickup-hidden"
+                                         style="padding: 10px 15px 10px 15px;">
+                                        <img src="/assets/images/time_date.png"
+                                             alt="time_date" style="float: left; margin: 9px;">
+                                        <input type="text" style="width: calc(100% - 36px);"
+                                               class="pic-up-time form-control"
+                                               id="ddate"
+                                               placeholder="When to pickup">
+                                    </div>
+                                    <div class="col-md-12 float-left pickup-hidden">
+                                        <div id="pic_map" style="height: 300px; width: 100%"></div>
+                                        <input type="hidden" value="" id="pic_lat">
+                                        <input type="hidden" value="" id="pic_lng">
+                                    </div>
+                                </div>
+                                <div class="delivery_new" style="float: left; width: 100%; padding: 10px 0;">
+                                    <input type="radio" class="type" name="type" id="delivery" value="delivery"/>
+                                    <label for="delivery" style="width: 100%;"><span id="delivery_span"></span>Normal
+                                        delivery</label>
+                                    <p>Free delivery on the next day for regular cakes & pastry or 3-4 days for
+                                        customized cakes.</p>
+
+                                    <div class="col-md-6 col-sm-6 float-left delivery-hidden"
+                                         style="padding: 10px;">
+                                        <select id="cities" onchange="getCityDistricts($(this).val());"
+                                                class="form-control">
+                                            <option selected="true" disabled="disabled">City</option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}">{{ city.city }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 float-left delivery-hidden" style="padding: 10px">
+                                        <select id="districts" class="js-example-placeholder-single form-control">
+                                            <option selected="true" disabled="disabled">District</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 float-left delivery-hidden" style="padding: 10px">
+                                        <div class="min-amount">
+                                            <input class="form-control min-amount" placeholder=" " readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 float-left delivery-hidden">
+                                        <div class="col-md-6 col-sm-6 float-left delivery-hidden"
+                                             style="padding: 10px 10px 10px 0px; float: left;">
+                                            <img src="/assets/images/time_date.png"
+                                                 alt="time_date" style="float: left; margin: 9px;">
+                                            <input type="text" class="delivery-time form-control"
+                                                   style="width: calc(100% - 36px);"
+                                                   id="ddate_2"
+                                                   placeholder="When to deliver">
+                                        </div>
+                                        <div class="col-md-6 col-sm-6 float-left delivery-hidden str"
+                                             style="padding: 10px 0px 10px 15px">
+                                            <input type="text" class="form-control hidden google-search"
+                                                   placeholder="Street"
+                                                   id="str" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 float-left delivery-hidden">
+                                        <div id="map_place_id" style="height: 400px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                                <div class="delivery_same_day" style="float: left; width: 100%; padding: 10px 0">
+                                    <input type="radio" class="type" name="type" id="delivery_same_day"
+                                           value="delivery_same_day">
+                                    <label for="delivery_same_day" style="width: 100%">
+                                        <span id="delivery_same_day_span"></span>
+                                        Delivery on the same day
+                                    </label>
+                                    <p>Free delivery on the same day for regular cakes & pastry, for limited areas in
+                                        Dubai.</p>
+
+                                    <div class="col-md-6 col-sm-6 float-left delivery-same"
+                                         style="padding: 10px 10px 10px 15px;">
+                                        <select id="cities-same-day" onchange="getCityDistricts($(this).val());"
+                                                class="form-control">
+                                            <option selected="true" disabled="disabled">City</option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}">{{ city.city }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 float-left delivery-same" style="padding: 10px">
+                                        <select id="districts-same-day"
+                                                class="js-example-placeholder-single form-control">
+                                            <option selected="true" disabled="disabled">District</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 float-left delivery-same" style="padding: 10px">
+                                        <div class="min-amount-delivery">
+                                            <input class="form-control min-amount-delivery" placeholder=" " readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 float-left delivery-same"
+                                         style="padding: 10px 10px 10px 15px;">
+                                        <img src="/assets/images/time_date.png"
+                                             alt="time_date" style="float: left; margin: 9px;">
+                                        <input type="text" class="form-control"
+                                               style="width: calc(100% - 36px);"
+                                               id="ddate_2_sameday"
+                                               placeholder="When to deliver">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 float-left delivery-same str-2"
+                                         style="padding: 10px 10px 10px 15px">
+                                        <input type="text" class="form-control hidden google-search"
+                                               placeholder="Street"
+                                               id="str-2"
+                                               value="">
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 float-left delivery-same">
+                                        <div id="map_place_same_day" style="height: 400px; width: 100%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="get-quotation">
+                            <input class="btn-quotation" type="button" id="sub_order" value="Get the quotation"
+                                   onclick="SendOrder();">
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <script src="/assets/js/basket.js"></script>
+{% endblock %}
