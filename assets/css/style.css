@@ -2736,8 +2736,9 @@ body.blur-mask .modal-product-details {
 }
 
 .contact-phone-whatsapp{
-    background: url(/assets/images/icon/whatsapp.svg) no-repeat left center;
+    background: url(/assets/images/icon/phone-whatsapp.png) no-repeat left center;
     background-size: auto 16px;
+    padding-left: 50px!important;
 }
 
 .modal-building-image{
