@@ -30,26 +30,60 @@ if(file_exists($config_path)) {
     $app['config'] = json_decode(file_get_contents($config_path), true);
 }
 
-use Base\Base;
-use Base\Auth;
 
-$app['product_link'] = 'https://awery.katrina.ae/system/downloads/cake_product_file.php?file_id=';
+$config_path = __DIR__ . '/../../config/config.json';
 
-$app->register(new DoctrineServiceProvider());
-$app['db.options'] = array(
-    'driver' => 'pdo_mysql',
-    'host' => 'localhost',
-    'dbname' => $app['config']['db']['dbname'],
-    'user' => $app['config']['db']['user'],
-    'password' => $app['config']['db']['password'],
-    'charset' => 'utf8',
+if(file_exists($config_path)) {
+    $app['config_katrina'] = json_decode(file_get_contents($config_path), true)['katrina'];
+}
+
+$app['checkExistField'] = $app->protect(function ($key, $field) use ($app) {
+    return (isset($app['config_katrina']) && isset($app['config_katrina'][$key]) && isset($app['config_katrina'][$key][$field])) ? true : false;
+});
+
+$db_config = array(
+    'host' => $app['checkExistField']('mysql', 'host') ? $app['config_katrina']['mysql']['host'] : '127.0.0.1',
+    'port' => $app['checkExistField']('mysql','port') ? $app['config_katrina']['mysql']['port'] :'3306',
+    'dbname' => $app['checkExistField']('mysql','dbname') ? $app['config_katrina']['mysql']['dbname'] : 'newkatrinasite',
+    'user' => $app['checkExistField']('mysql','user') ? $app['config_katrina']['mysql']['user'] : 'newkatrinasite',
+    'pass' => $app['checkExistField']('mysql','pass') ? $app['config_katrina']['mysql']['pass']  : 'ktA5hdk8M'
 );
 
-$app['path_img'] = __DIR__ . '/../uploads';
+$redis_config = array(
+    'host' => 'tcp://'.($app['checkExistField']('redis', 'host') ? $app['config_katrina']['redis']['host'] : '127.0.0.1'),
+    'port' => $app['checkExistField']('redis','port') ? $app['config_katrina']['redis']['port'] :'6379',
+);
 
-$app->register(new SessionServiceProvider());
-$app['session.storage.options'] = array('cookie_lifetime' => $Lifetime);
+$lifeTime = 60 * 60 * 24 * 30;
+ini_set("session.save_handler", "redis");
+ini_set("session.save_path", $redis_config['host']. ":" .$redis_config['port'] . "?prefix=katrina-" . md5('https://katrina.ae'));
+ini_set("session.gc_probability", "1");
+ini_set("session.gc_divisor", "100");
+ini_set("session.gc_maxlifetime", $lifeTime);
+ini_set("session.cookie_lifetime", $lifeTime);
+
+use Symfony\Component\HttpFoundation\Session\Session;
+
+$app['session'] = new Session();
 $app['session']->start();
+
+$app->register(new \Silex\Provider\DoctrineServiceProvider(), array(
+    'db.options' => array(
+        'driver' => 'pdo_mysql',
+        'host' => $db_config['host'],
+        'port' => $db_config['port'],
+        'dbname' => $db_config['dbname'],
+        'user' => $db_config['user'],
+        'password' => $db_config['pass'],
+        'charset' => 'utf8'
+    )
+));
+
+$app['path_img'] = __DIR__ . '/../uploads';
+$app['product_link'] = 'https://awery.katrina.ae/system/downloads/cake_product_file.php?file_id=';
+
+use Base\Base;
+use Base\Auth;
 
 $base = new Base($app);
 $auth = new Auth($app);
