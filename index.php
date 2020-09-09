@@ -860,7 +860,6 @@ $app->before(function (Request $request) use ($app, $base, $auth) {
     }
 
     $app['errors'] = array();
-
     if (isset($_COOKIE['CUSTID'])) {
         $user = $auth->getCustomerData();
         if($user){

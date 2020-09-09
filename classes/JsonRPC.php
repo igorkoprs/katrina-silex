@@ -17,10 +17,6 @@ class JsonRPC
             'Accept: application/json'
         );
 
-        if (isset($_COOKIE['CUSTID'])) {
-            $headers[] = 'AWERY-CUST-ID: ' . $_COOKIE['CUSTID'];
-        }
-
         $payload = array(
             'method' => $method,
             'id' => mt_rand()
@@ -32,15 +28,27 @@ class JsonRPC
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $app['config']['host']);  //if server needs to think this post came from elsewhere
-        curl_setopt($ch, CURLOPT_COOKIEJAR, AWERY_ACM_COOKIE);  //initiates cookie file if needed
-        curl_setopt($ch, CURLOPT_COOKIEFILE, AWERY_ACM_COOKIE);  // Uses cookies from previous session if exist
+        //curl_setopt($ch, CURLOPT_COOKIEJAR, AWERY_ACM_COOKIE);  //initiates cookie file if needed
+        //curl_setopt($ch, CURLOPT_COOKIEFILE, AWERY_ACM_COOKIE);  // Uses cookies from previous session if exist
         curl_setopt($ch, CURLOPT_POST, 1);
+        if($method != 'login' && isset($_COOKIE['ACM_PHPSESSID'])) {
+            curl_setopt($ch, CURLOPT_COOKIE, 'PHPSESSID='.base64_decode($_COOKIE['ACM_PHPSESSID']));
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
         $response = curl_exec($ch);
-        $response = json_decode($response, true);
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $header = substr($response, 0, $header_size);
+        $http_body = substr($response, $header_size);
+        if(preg_match("/PHPSESSID=(.*?)(?:;|\r\n)/", $header, $matches)){
+            if($matches[1] && $matches[1] != ''){
+                setcookie('ACM_PHPSESSID', base64_encode($matches[1]), strtotime('+100 days'), '/');
+            }
+        }
+        $response = json_decode($http_body, true);
         if(isset($response['result'])) {
             $response = $response['result'];
         }
