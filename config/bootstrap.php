@@ -62,9 +62,9 @@ ini_set("session.gc_divisor", "100");
 ini_set("session.gc_maxlifetime", $lifeTime);
 ini_set("session.cookie_lifetime", $lifeTime);
 
-use Symfony\Component\HttpFoundation\Session\Session;
-
-$app['session'] = new Session();
+$app->register(new SessionServiceProvider());
+$app['session.storage.options'] = array('cookie_lifetime' => $lifeTime);
+$app['session.storage.handler'] = null;
 $app['session']->start();
 
 $app->register(new \Silex\Provider\DoctrineServiceProvider(), array(

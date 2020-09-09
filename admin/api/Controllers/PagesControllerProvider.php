@@ -339,7 +339,7 @@ class PagesControllerProvider implements ControllerProviderInterface
 
             return $app->json([
                 'error' => 0,
-                'imageUrl' => 'https://newkatrinasite.awery.com/uploads/pages/' . $directory . '/' . $file_name . '.' . $ext,
+                'imageUrl' => 'https://katrina.ae/uploads/pages/' . $directory . '/' . $file_name . '.' . $ext,
                 'data_list' => array(
                     'filepath' => $directory . '/' . $file_name . '.' . $ext,
                 ),

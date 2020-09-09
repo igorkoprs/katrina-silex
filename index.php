@@ -176,6 +176,7 @@ $app->post('/register', function (Request $request) use ($app, $auth, $base) {
 $app->post('/logout', function () use ($app, $auth) {
     if (isset($_COOKIE['CUSTID'])) {
         $app['session']->remove('CUSTID');
+        $app['session']->remove('ACM_PHPSESSID');
         setcookie('CUSTID', '', time() - 36000, '/');
     }
     return $app->json(['res' => true, 'errors' => 0]);
@@ -547,7 +548,7 @@ $app->match('/migs_request', function (Symfony\Component\HttpFoundation\Request 
         'vpc_MerchTxnRef' => 'REF_' . time(),
         'vpc_Merchant' => $merchantId,
         'vpc_OrderInfo' => $req['booking_id'],
-        'vpc_ReturnURL' => 'https://newkatrinasite.awery.com/booking-result',
+        'vpc_ReturnURL' => 'https://katrina.ae/booking-result',
         'vpc_Version' => '1',
         'vpc_SecureHashType' => 'SHA256',
     );
@@ -574,9 +575,9 @@ $app->match('/migs_request', function (Symfony\Component\HttpFoundation\Request 
 })->bind('MiGs_Payment');
 
 $app->match('/booking-result', function (Symfony\Component\HttpFoundation\Request $request) use ($app) {
-    $path = realpath(__DIR__ .'/../log/payment_migs.log');
+    $path = file_exists(realpath(__DIR__ .'/../log/payment_migs.log')) ? realpath(__DIR__ .'/../log/payment_migs.log') : __DIR__ .'/../log/payment_migs.log';
 
-    $file = fopen($path, 'a') or die('Cannot!');
+    $file = fopen($path, 'a+') or die(json_encode(array('exist'=> file_exists($path))));
     fwrite($file, "New Payment " . date('Y-m-d H:i:s') . "\n");
     fwrite($file, json_encode($_GET) . "\n");
     foreach ($_GET as $key => $resp) {
@@ -614,16 +615,16 @@ $app->match('/booking-result', function (Symfony\Component\HttpFoundation\Reques
             $res = JsonRPC::execute('createCakePayment', array($req));
             fwrite($file,json_encode($req) . "\n\n");
             fclose($file);
-            header('Location: https://newkatrinasite.awery.com/booking?pay=success');
+            header('Location: https://katrina.ae/booking?pay=success');
         } else {
             fwrite($file, "\n");
             fclose($file);
-            header('Location: https://newkatrinasite.awery.com/booking?pay=error');
+            header('Location: https://katrina.ae/booking?pay=error');
         }
     } else {
         fwrite($file, "\n");
         fclose($file);
-        header('Location: https://newkatrinasite.awery.com/booking?pay=error');
+        header('Location: https://katrina.ae/booking?pay=error');
     }
 
     die();
@@ -848,13 +849,13 @@ $app->before(function (Request $request) use ($app, $base, $auth) {
 
     if ($app['session']->has('language')) {
         /*$translations = $base->getTranslations($app['session']->get('language'));
-        $app['translations'] = $translations['trans'];
-        $app['lang'] = $translations['lang'];*/
+        $app['translations'] = $translations['trans'];*/
+        $app['lang'] = 'en';
         $app['menu'] = $base->generateMenu($app['session']->get('language'));
     } else {
        /* $translations = $base->getTranslations('en');
-        $app['translations'] = $translations['trans'];
-        $app['lang'] = $translations['lang'];*/
+        $app['translations'] = $translations['trans'];*/
+        $app['lang'] = 'en';
         $app['session']->set('lang', 'en');
         $app['menu'] = $base->generateMenu('en');
     }
@@ -867,7 +868,6 @@ $app->before(function (Request $request) use ($app, $base, $auth) {
             $app['userData'] = $user;
             if ((int)$app['userData']['deleted'] == 1) {
                 $app['session']->remove('CUSTID');
-                setcookie('CUSTID', '', time() - 36000, '/');
             }
         }
     }
