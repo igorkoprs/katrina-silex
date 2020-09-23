@@ -645,6 +645,115 @@ $app->post('/changeLang', function (Request $request) use ($app, $base) {
     return $app->json(['data' => $app['translations'], 'lang' => $lang]);
 })->bind('changeLang');
 
+$app->match('/sitemap/generation', function () use ($app, $base) {
+
+    define('BASE_URL', 'https://katrina.ae');
+
+    if(file_exists(__DIR__ . '/sitemap/sitemap.xml'))  unlink(__DIR__ . '/sitemap/sitemap.xml');
+
+
+    $sql = 'SELECT * FROM `news` WHERE `is_deleted` != 1 AND `is_active` = 1 ORDER BY `published` DESC';
+    $news = $app['db']->fetchAll($sql);
+
+    $result = '';
+    $result .= '<?xml version=\'1.0\' encoding=\'UTF-8\'?>' . PHP_EOL;
+    $result .= '<urlset xmlns=\'http://www.sitemaps.org/schemas/sitemap/0.9\'>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '</loc>' . PHP_EOL;
+    $result .= '<changefreq>monthly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/create-your-cake</loc>' . PHP_EOL;
+    $result .= '<changefreq>monthly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/franchise</loc>' . PHP_EOL;
+    $result .= '<changefreq>monthly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/companyprofile</loc>' . PHP_EOL;
+    $result .= '<changefreq>monthly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/clients</loc>' . PHP_EOL;
+    $result .= '<changefreq>monthly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/faq</loc>' . PHP_EOL;
+    $result .= '<changefreq>monthly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/terms-conditions</loc>' . PHP_EOL;
+    $result .= '<changefreq>monthly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/privacy-policy</loc>' . PHP_EOL;
+    $result .= '<changefreq>yearly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/delivery</loc>' . PHP_EOL;
+    $result .= '<changefreq>yearly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/loyalty-program</loc>' . PHP_EOL;
+    $result .= '<changefreq>yearly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+    $result .= '<url>' . PHP_EOL;
+    $result .= '<loc>' . BASE_URL . '/news</loc>' . PHP_EOL;
+    $result .= '<changefreq>yearly</changefreq>' . PHP_EOL;
+    $result .= '<priority>1.00</priority>' . PHP_EOL;
+    $result .= '</url>' . PHP_EOL;
+
+    foreach ($app['categories'] as $category){
+        $result .= '<url>' . PHP_EOL;
+        $result .= '<loc>' . BASE_URL . '/prices/' . $category['id'];
+        $result .= '</loc>' . PHP_EOL;
+        $result .= '<changefreq>yearly</changefreq>' . PHP_EOL;
+        $result .= '<priority>1.00</priority>' . PHP_EOL;
+        $result .= '</url>' . PHP_EOL;
+        $products = $base->getSiteProducts(array("site_category_id" => $category['id']));
+
+        foreach ($products as $product){
+            $result .= '<url>' . PHP_EOL;
+            $result .= '<loc>' . BASE_URL . '/single/' . $product['id'];
+            $result .= '</loc>' . PHP_EOL;
+            $result .= '<changefreq>yearly</changefreq>' . PHP_EOL;
+            $result .= '<priority>1.00</priority>' . PHP_EOL;
+            $result .= '</url>' . PHP_EOL;
+        }
+    }
+
+    foreach ($news as $item) {
+        $result .= '<url>' . PHP_EOL;
+        $result .= '<loc>';
+        $result .= BASE_URL . '/news/' . $item['slug'];
+        $result .= '</loc>' . PHP_EOL;
+        $result .= '<changefreq>monthly</changefreq>' . PHP_EOL;
+        $result .= '<priority>0.9</priority>' . PHP_EOL;
+        $result .= '</url>' . PHP_EOL;
+    }
+
+    $result .= '</urlset>';
+    file_put_contents((__DIR__ . '/sitemap/sitemap.xml'), $result);
+
+    return $app->json(array(
+        'error' => 0,
+        'message' => 'Success',
+        'file_exist' => file_exists(__DIR__ . '/sitemap/sitemap.xml'),
+        'path' => __DIR__ . '/sitemap/sitemap.xml',
+    ));
+})->bind('generationSitemap');
+
 $app->get('/news', function () use ($app, $base) {
     $page = 1;
     $perpage = 4;
