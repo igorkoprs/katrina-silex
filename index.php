@@ -942,9 +942,8 @@ $app->before(function (Request $request) use ($app, $base, $auth) {
     $app['title'] = 'Katrina Sweets & Confectionary, Bakery. Best flavor cakes, pastries and bread in proudly made in U.A.E.';
     $app['description'] = 'Katrina Sweets & Confectionary, Bakery. Best flavor cakes, pastries and bread in proudly made in U.A.E.';
 
-    //$items = $base->getUserCart();
-
-    //$app['carts'] = $items;
+    $items = $base->getUserCart();
+    $app['carts'] = $items;
 
     if($app['session']->has('languages'))
         $app['languages'] = $app['session']->get('languages');

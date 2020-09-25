@@ -78,6 +78,7 @@
                                 </ul>
                             </div>
                             <a class="basket-header" href="/basket">
+                                <span id="amount-purchases">{{ app.carts.count }}</span>
                                 <img src="/assets/images/icon/basket.svg">
                                {# {% if app.carts.count|length > 0 %}
                                     <span id="amount-purchases"> {{ app.carts.count }} ({{ app.carts.amount }} {{ app.config.currency }})</span>

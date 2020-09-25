@@ -154,6 +154,10 @@ body {
     font-family: Lato !important;
 }
 
+body.blur-mask{
+    overflow: hidden;
+}
+
 body input {
     outline: none !important;
 }
@@ -500,9 +504,16 @@ header {
 }
 
 #amount-purchases {
-    font-weight: 800;
-    display: inline-block;
-    vertical-align: middle;
+    color: #fff;
+    background-color: #bf8f67;
+    border-radius: 10px;
+    padding: 2px 7px;
+    font-weight: 600;
+    font-size: 12px;
+    margin-left: 10px;
+    position: absolute;
+    right: -8px;
+    top: -8px;
 }
 
 .header-search-block {
@@ -1096,6 +1107,7 @@ body.blur-mask .modal-product-details {
     z-index: 150;
     opacity: 1;
     transition: all 1s ease;
+    overflow: auto;
 }
 
 .product-details-items {
@@ -2309,6 +2321,22 @@ body.blur-mask .modal-product-details {
     font-weight: bold;
 }
 
+.default-page-container h1.faq-h1 {
+    font-size: 20px;
+    text-align: center;
+    color: #C55A11;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+}
+
+.default-page-container h2 {
+    font-size: 18px;
+    text-align: left;
+    color: #000000;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+}
+
 .default-page-container p {
     font-size: 15px;
     color: #333333;
@@ -2485,10 +2513,13 @@ body.blur-mask .modal-product-details {
 
 .default-page-container .terms-ul li{
     list-style: disc;
-}
-
-.default-page-container .terms-ul li:first-child{
-    text-decoration: underline;
+    font-size: 15px;
+    color: #333333;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: left;
+    margin-bottom: 10px;
 }
 
 .default-page-container ul.terms-ul{
@@ -3391,15 +3422,6 @@ body.blur-mask .modal-product-details {
 
     .adress-map-block{
         display: none;
-    }
-}
-
-@media screen and (max-height: 760px) {
-    .modal-product-details-body .product-modal-remarks {
-        height: 50px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
     }
 }
 

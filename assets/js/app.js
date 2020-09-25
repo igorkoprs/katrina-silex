@@ -280,7 +280,7 @@ function appendToCart(element, type) {
             if (data.error != 0) {
                 alert(data.message);
             } else {
-                $('#amount-purchases').text(data.data_list.basket.count + '(' + data.data_list.basket.amount + ' AED)');
+                $('#amount-purchases').text(data.data_list.basket.count);
                 if (type === 'updateItem') {
                     $('#basket-total').text('Total Order: ' + data.data_list.basket.amount.toFixed(0) + ' AED');
                     $('#basket-total').attr('data-total', data.data_list.basket.amount.toFixed(0));
@@ -326,7 +326,7 @@ function Login(form) {
         success: function (data) {
             console.log('success: ', data);
             if (data.errors.length === 0) {
-                window.location.reload();
+                document.location = '/';
             } else {
                 const text = 'Customer not found or pin-code incorrect';
                 sweet_Alert(text, 'error', true, false);
@@ -461,6 +461,7 @@ function searchProducts(val) {
             crossDomain: true,
             url: '/search',
             success: function (data) {
+                $('#search-result-container').html('');
                 const products = data.products;
                 console.log('success: ', data);
                 if (products) {
