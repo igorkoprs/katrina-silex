@@ -6,6 +6,7 @@ var categories_p = new Array();
 var min_pay = 0.3;
 
 $(document).ready(function () {
+    getCurrentYear();
     // обработка ответа при оплате
     const pay_res = window.location.href.split('?');
     if (pay_res[1]) {
@@ -72,6 +73,8 @@ $(document).ready(function () {
                         settings: {
                             slidesToShow: 1,
                             centerPadding: '60px',
+                            arrows: false,
+                            autoplay: true
                         }
                     },
                     {
@@ -179,7 +182,7 @@ function showSideNavProdDetails(prod) {
                     <input class="hidden unit" value="' + prod.unit + '">\
                     <input class="hidden code" value="' + prod.code + '">\
                     <input class="hidden category_location_id" value="' + prod.category_location_id + '">\
-                    <input type="number"  class="hidden" id="for-price-details" value="' + prod.price.split(" ")[0] + '">\
+                    <input type="number"  class="hidden" style="vertical-align: middle" id="for-price-details" value="' + prod.price.split(" ")[0] + '">\
                     <div class="descr" id="modal-descr-details">' + prod.descr + '</div>\
                     <div class="product-modal-remarks">' + prod.remarks + '</div>\
                     <input class="price" id="modal-price-details" value="' + price + '">\
@@ -926,3 +929,6 @@ function headClickPrices() {
     });
 }
 
+function getCurrentYear() {
+    document.querySelector('.current-year').innerText = new Date().getFullYear()
+    ;}
