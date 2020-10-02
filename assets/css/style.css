@@ -2728,6 +2728,13 @@ body.blur-mask .modal-product-details {
     line-height: 25px;
 }
 
+.item-contact-building a {
+    color: #000;
+}
+.item-contact-building a:hover {
+    color: #000;
+}
+
 .contact-city-address span{
     font-size: 14px;
     display: inline-block;

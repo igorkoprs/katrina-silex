@@ -448,6 +448,8 @@ function forgotPassword(tel) {
     });
 }
 
+
+
 function searchProducts(val) {
     $('#search-result-container').html('');
     if (val.length >= 3) {
@@ -930,5 +932,12 @@ function headClickPrices() {
 }
 
 function getCurrentYear() {
-    document.querySelector('.current-year').innerText = new Date().getFullYear()
-    ;}
+    document.querySelector('.current-year').innerText = new Date().getFullYear();
+}
+
+
+document.querySelector('#header-search-input').addEventListener('keyup', () => {
+    setTimeout(function () {
+        searchProducts($('.header-search').val());
+    }, 2000)
+});
