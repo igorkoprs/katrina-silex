@@ -302,7 +302,9 @@ header {
 .menu-links-item.menu-mob-logo {
     display: none;
 }
-
+.menu-links-item.menu-mob-logo img {
+    width: 100%;
+}
 .menu-header-links .menu-links-item:last-of-type {
     text-align: right;
     padding-right: 0;
@@ -932,6 +934,15 @@ footer {
     padding-right: 20px;
     background: url(/assets/images/icon/next.svg) no-repeat bottom 17px right 5px;
     background-size: 10px;
+    cursor: pointer;
+}
+
+.menu-links-item .parent-link {
+    padding-right: 20px;
+    background: url(/assets/images/icon/next-white.svg) no-repeat bottom 7px right 5px;
+    background-size: 10px;
+    color: #fff;
+    cursor: pointer;
 }
 
 .hidden-dropdown {
