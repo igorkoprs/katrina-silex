@@ -112,3 +112,8 @@ function checkEmail($email)
 header('Access-Control-Allow-Credentials:true');
 header('Access-Control-Allow-Headers:Origin,X-Requested-With,Content-Type,Accept,Authorization,X-Custom-Header,Content-Range,Content-Disposition,Content-Description');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+
+$app['fbLogin'] = new \Monolog\Logger('fbLogin');
+$app['fbLogin']->pushHandler(new Monolog\Handler\StreamHandler(__DIR__ . '/../../log/fb_login.log', \Monolog\Logger::INFO));
+
+

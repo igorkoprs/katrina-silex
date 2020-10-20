@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="hz7.awery.aero">
+  <component name="PublishConfigData" autoUpload="Always" serverName="me-south-1.awery.com">
     <serverData>
+      <paths name="acmdev@me-south-1.awery.com (project level) (project level)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="awsbahrain.awery.aero">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="awsnvirginia.awery.aero">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="hz3.awery.aero">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -12,7 +33,7 @@
       <paths name="hz7.awery.aero">
         <serverdata>
           <mappings>
-            <mapping deploy="/web/site/newkatrinasite.awery.com/www" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/web/shopkatrina/www" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
@@ -20,6 +41,20 @@
         <serverdata>
           <mappings>
             <mapping deploy="/web/site/newkatrinasite.awery.com/www" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="hz7.awery.aero (project level) (project level)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/web/site/newkatrinasite.awery.com/www" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="me-south-1.awery.com">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/web/site/katrina.ae/www" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

@@ -41,7 +41,8 @@ class Base
                 LEFT JOIN `translations_pages` as `tp` on `tp`.`id_page` = `p`.`id`
                 LEFT JOIN `languages` as `lang` on `lang`.`id` = `tp`.`id_lang`
                 WHERE `lang`.`code` = ? AND `p`.`slug` = ? AND `p`.`is_show` = 1 AND `p`.`is_deleted` = 0";
-        $page = $this->app['db']->fetchAssoc($sql, array(strtolower($this->app['lang']), $page_slug));
+        //$page = $this->app['db']->fetchAssoc($sql, array(strtolower($this->app['lang']), $page_slug));
+        $page = $this->app['db']->fetchAssoc($sql, array('en', $page_slug));
 
         return $page;
     }
@@ -52,7 +53,8 @@ class Base
                 LEFT JOIN `translations_pages` as `tp` on `tp`.`id_news` = `n`.`id`
                 LEFT JOIN `languages` as `lang` on `lang`.`id` = `tp`.`id_lang`
                 WHERE `lang`.`code` = ? AND `n`.`is_active` = 1 AND `n`.`is_deleted` = 0 ORDER BY `n`.`published` DESC $limits";
-        $news = $this->app['db']->fetchAll($sql, array(strtolower($this->app['lang'])));
+        //$news = $this->app['db']->fetchAll($sql, array(strtolower($this->app['lang'])));
+        $news = $this->app['db']->fetchAll($sql, array('en'));
 
         foreach ($news as &$n) {
             $n['published'] = date("j F Y", strtotime($n['published']));
@@ -63,7 +65,8 @@ class Base
                 LEFT JOIN `translations_pages` as `tp` on `tp`.`id_news` = `n`.`id`
                 LEFT JOIN `languages` as `lang` on `lang`.`id` = `tp`.`id_lang`
                 WHERE `lang`.`code` = ? AND `n`.`is_active` = 1 AND `n`.`is_deleted` = 0";
-        $count = $this->app['db']->fetchAssoc($sql, array(strtolower($this->app['lang'])));
+        //$count = $this->app['db']->fetchAssoc($sql, array(strtolower($this->app['lang'])));
+        $count = $this->app['db']->fetchAssoc($sql, array('en'));
 
         return array('news' => $news, 'count' => $count['count']);
     }
@@ -175,28 +178,28 @@ class Base
 
     public function getWarehouses()
     {
-        $res = JsonRPC::execute('getWarehouses', array('all'));
+        $res = JsonRPC::execute('External_ProductBooking.getWarehouses', array('all'));
 
         return $res['data_list'];
     }
 
     public function getCities()
     {
-        $res = JsonRPC::execute('getCities', array('all'));
+        $res = JsonRPC::execute('External_ProductBooking.getCities', array('all'));
 
         return $res['data_list'];
     }
 
     public function getCityDistricts($city_id = 0)
     {
-        $res = JsonRPC::execute('getCityDistricts', array($city_id));
+        $res = JsonRPC::execute('External_ProductBooking.getCityDistricts', array($city_id));
 
         return $res['data_list'];
     }
 
     public function getSiteCategories()
     {
-        $cat = JsonRPC::execute('getSiteCategories', array(array()));
+        $cat = JsonRPC::execute('External_ProductBooking.getSiteCategories', array(array()));
 
         $categories = array();
         foreach ($this->getTree($cat['data_list']) as &$cat) {
@@ -218,14 +221,14 @@ class Base
 
     public function getSiteProducts($data = array())
     {
-        $products = JsonRPC::execute('getSiteProducts', array($data));
+        $products = JsonRPC::execute('External_ProductBooking.getSiteProducts', array($data));
 
         return $products['data_list'];
     }
 
     public function getSiteProductsByDescr($descr = '')
     {
-        $products = JsonRPC::execute('getSiteProducts', array(array('descr' => $descr)));
+        $products = JsonRPC::execute('External_ProductBooking.getSiteProducts', array(array('descr' => $descr)));
         foreach ($products['data_list'] as $key => &$prod) {
             if((bool)$prod['deleted'])
                 unset($products['data_list'][$key]);
@@ -235,7 +238,7 @@ class Base
 
     public function getSiteProductsByIds($prod_id)
     {
-        $products = JsonRPC::execute('getSiteProducts', array(array('ids' => $prod_id)));
+        $products = JsonRPC::execute('External_ProductBooking.getSiteProducts', array(array('ids' => $prod_id)));
 
         foreach ($products['data_list'] as &$prod) {
             $prod['image_ids'] = explode(',', $prod['image_id']);

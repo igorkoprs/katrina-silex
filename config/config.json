@@ -1,14 +1,24 @@
 {
-    "host": "https://awery.katrina.ae/booking_cake/index.php",
+    "host": "https://awery.katrina.ae",
+    "demoHost": "https://demo-mamay.awery.com.ua",
+    "siteHost": "https://katrina.ae",
     "acmRealm": "katrina",
     "External_Udb": {
-        "login": "alexandr",
-        "passwd": "alex12345"
+        "login": "katrina_external",
+        "passwd": "external_katrina"
+    },
+    "Demo_External_Udb": {
+        "login": "alex_p",
+        "passwd": "alex_dev_mamay"
     },
     "db": {
         "dbname": "newkatrinasite",
         "user": "newkatrinasite",
         "password": "ktA5hdk8M"
+    },
+    "facebook_app_credentials": {
+        "app_id": "100667310561658",
+        "app_secret": "09de7052f06c3348ad558e8694b385dd"
     },
     "currency" : "AED"
 }

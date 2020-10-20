@@ -22,6 +22,11 @@
         <div class="auth-button">
             <button class="butn-pinc" type="button" id="sign-in" onclick="Login($(this).parent().parent())">{{ app.translations.sign_in }}</button>
         </div>
+        {#<div class="facebook-auth-block">
+            <a class="facebook-button" href="https://www.facebook.com/v8.0/dialog/oauth?client_id={{ app.config.facebook_app_credentials.app_id }}&redirect_uri={{ app.config.siteHost }}/facebook/callback/login&state=st=state123abc,ds=123456789">
+                Login with Facebook
+            </a>
+        </div>#}
     </div>
     <div class="signup-inputs-block">
         <div class="auth-inputs-row">
@@ -34,7 +39,7 @@
                 <input type="text" id="user-phone" placeholder="{{ app.translations.phone }}">
             </div>
         </div>
-        <div class="auth-inputs-row" style="justify-content: flex-start;">
+        <div class="auth-inputs-row" >
             <div class="sign-user-data-block">
                 <label style="padding-right: 22px;">{{ app.translations.email }}</label>
                 <input type="text" id="user-email" placeholder="{{ app.translations.email }}" >
@@ -44,9 +49,13 @@
                 <input type="text" id="user-birthday" placeholder="dd-mm" autocomplete="new-password">
             </div>
         </div>
-
         <div class="auth-button" style="margin-top: 40px">
             <button class="butn-pinc" type="button" id="sign-up" onclick="Register()">{{ app.translations.sign_up }}</button>
         </div>
+        {#<div class="facebook-auth-block">
+            <a class="facebook-button" href="https://www.facebook.com/v8.0/dialog/oauth?client_id={{ app.config.facebook_app_credentials.app_id }}&redirect_uri={{ app.config.siteHost }}/facebook/callback/register&state=st=state123abc,ds=123456789">
+                Continue with Facebook
+            </a>
+        </div>#}
     </div>
 </div>

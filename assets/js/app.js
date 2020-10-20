@@ -6,6 +6,7 @@ var categories_p = new Array();
 var min_pay = 0.3;
 
 $(document).ready(function () {
+    getCurrentYear();
     // обработка ответа при оплате
     const pay_res = window.location.href.split('?');
     if (pay_res[1]) {
@@ -16,6 +17,21 @@ $(document).ready(function () {
             console.log('error');
             sweet_Alert('Error', 'error', true, false);
         }
+    }
+    if (window.location.hash && window.location.hash == '#_=_') {
+        window.location.hash = '';
+    }
+    if (window.location.href.indexOf('phone_form=1') > -1) {
+        $('#phone_form').modal();
+    }
+    if (window.location.href.indexOf('errors') > -1) {
+
+        var url = new URL(window.location.href);
+        var obj = url.searchParams.get('errors');
+
+        errors = JSON.parse(obj);
+        /*options.timeOut = 5000 * Object.keys(errors).length;*/
+        showErrors(errors);
     }
 
     //Фиксация хедера
@@ -72,6 +88,8 @@ $(document).ready(function () {
                         settings: {
                             slidesToShow: 1,
                             centerPadding: '60px',
+                            arrows: false,
+                            autoplay: true
                         }
                     },
                     {
@@ -179,11 +197,11 @@ function showSideNavProdDetails(prod) {
                     <input class="hidden unit" value="' + prod.unit + '">\
                     <input class="hidden code" value="' + prod.code + '">\
                     <input class="hidden category_location_id" value="' + prod.category_location_id + '">\
-                    <input type="number"  class="hidden" id="for-price-details" value="' + prod.price.split(" ")[0] + '">\
+                    <input type="number"  class="hidden" style="vertical-align: middle" id="for-price-details" value="' + prod.price.split(" ")[0] + '">\
                     <div class="descr" id="modal-descr-details">' + prod.descr + '</div>\
                     <div class="product-modal-remarks">' + prod.remarks + '</div>\
                     <input class="price" id="modal-price-details" value="' + price + '">\
-                    <a class="prod_link" href="https://katrina.ae/single/' + prod.id + '"> Read more </a>\
+                    <a class="prod_link" href="https://newkatrinasite.awery.com/single/' + prod.id + '"> Read more </a>\
                      <div class="qty" id="modal-qty-details">\
                         <button class="plus-minus" id="minus-details">-</button>\
                         <input type="text" id="modal-number-details" class="form-control" value="1">\
@@ -393,6 +411,36 @@ function Register() {
     });
 }
 
+function registerByFb() {
+    var phone = $('#fb_login').val();
+    if (phone.substring(0, 1) !== '+') {
+        sweet_Alert('Please enter your mobile phone No. to get SMS with new PIN', 'error', true, false);
+    }
+    $.ajax({
+        type: 'POST',
+        async: true,
+        data: JSON.stringify({main_phone: $('#fb_login').val()}),
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
+        url: link + '/fb-register',
+        success: function (data) {
+            console.log(data);
+            if (Object.keys(data.errors).length > 0) {
+                showErrors(data.errors);
+            } else {
+                var reload = window.location.href.replace(window.location.search, '');
+                reload = reload.replace(window.location.hash, '');
+                window.location.href = reload;
+            }
+        },
+        error: function (data) {
+            console.log('error: ', data);
+        }
+    });
+}
+
 function Logout() {
     $.ajax({
         type: "POST",
@@ -445,11 +493,18 @@ function forgotPassword(tel) {
     });
 }
 
+document.querySelector('#header-search-input').addEventListener('keyup', () => {
+    setTimeout(function () {
+        searchProducts($('.header-search').val());
+    }, 2000)
+});
+
 function searchProducts(val) {
     $('#search-result-container').html('');
     if (val.length >= 3) {
         var req;
         req = JSON.stringify({descr: val});
+        $('.icon-search').toggleClass('pending-processing');
         console.log('rpc request: ', req);
         $.ajax({
             type: "POST",
@@ -464,6 +519,7 @@ function searchProducts(val) {
                 $('#search-result-container').html('');
                 const products = data.products;
                 console.log('success: ', data);
+                $('.icon-search').toggleClass('pending-processing');
                 if (products) {
                     $('#search-result-container').show();
                     for (var key in products) {
@@ -507,6 +563,7 @@ function searchProducts(val) {
 
             },
             error: function (data) {
+                $('.icon-search').toggleClass('pending-processing');
                 console.log('error: ', data);
             },
             dataType: 'json'
@@ -650,7 +707,7 @@ function checkout() {
                 sweet_Alert_Success('Thank you, we prepare the quotation for your cake and will call you soon', 'success', true, false);
 
                 setTimeout(function () {
-                     window.location.href = '/';
+                    window.location.href = '/';
                 }, 2000);
             }
         },
@@ -926,3 +983,7 @@ function headClickPrices() {
     });
 }
 
+function getCurrentYear() {
+    document.querySelector('.current-year').innerText = new Date().getFullYear()
+    ;
+}

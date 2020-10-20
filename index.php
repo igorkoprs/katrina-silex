@@ -176,7 +176,6 @@ $app->post('/register', function (Request $request) use ($app, $auth, $base) {
 $app->post('/logout', function () use ($app, $auth) {
     if (isset($_COOKIE['CUSTID'])) {
         $app['session']->remove('CUSTID');
-        $app['session']->remove('ACM_PHPSESSID');
         setcookie('CUSTID', '', time() - 36000, '/');
     }
     return $app->json(['res' => true, 'errors' => 0]);
@@ -548,7 +547,7 @@ $app->match('/migs_request', function (Symfony\Component\HttpFoundation\Request 
         'vpc_MerchTxnRef' => 'REF_' . time(),
         'vpc_Merchant' => $merchantId,
         'vpc_OrderInfo' => $req['booking_id'],
-        'vpc_ReturnURL' => 'https://katrina.ae/booking-result',
+        'vpc_ReturnURL' => 'https://newkatrinasite.awery.com/booking-result',
         'vpc_Version' => '1',
         'vpc_SecureHashType' => 'SHA256',
     );
@@ -575,9 +574,9 @@ $app->match('/migs_request', function (Symfony\Component\HttpFoundation\Request 
 })->bind('MiGs_Payment');
 
 $app->match('/booking-result', function (Symfony\Component\HttpFoundation\Request $request) use ($app) {
-    $path = file_exists(realpath(__DIR__ .'/../log/payment_migs.log')) ? realpath(__DIR__ .'/../log/payment_migs.log') : __DIR__ .'/../log/payment_migs.log';
+    $path = realpath(__DIR__ .'/../log/payment_migs.log');
 
-    $file = fopen($path, 'a+') or die(json_encode(array('exist'=> file_exists($path))));
+    $file = fopen($path, 'a') or die('Cannot!');
     fwrite($file, "New Payment " . date('Y-m-d H:i:s') . "\n");
     fwrite($file, json_encode($_GET) . "\n");
     foreach ($_GET as $key => $resp) {
@@ -612,19 +611,19 @@ $app->match('/booking-result', function (Symfony\Component\HttpFoundation\Reques
                 'tax_option_id' => 6,
                 'payment_notes' => 'Payment on booking: ' . $_GET['vpc_OrderInfo'] . ' Online transaction reference number: ' . $_GET['vpc_MerchTxnRef'] . ' BatchNo: ' . $_GET['vpc_BatchNo']
             );
-            $res = JsonRPC::execute('createCakePayment', array($req));
+            $res = JsonRPC::execute('External_ProductBooking.createCakePayment', array($req));
             fwrite($file,json_encode($req) . "\n\n");
             fclose($file);
-            header('Location: https://katrina.ae/booking?pay=success');
+            header('Location: https://newkatrinasite.awery.com/booking?pay=success');
         } else {
             fwrite($file, "\n");
             fclose($file);
-            header('Location: https://katrina.ae/booking?pay=error');
+            header('Location: https://newkatrinasite.awery.com/booking?pay=error');
         }
     } else {
         fwrite($file, "\n");
         fclose($file);
-        header('Location: https://katrina.ae/booking?pay=error');
+        header('Location: https://newkatrinasite.awery.com/booking?pay=error');
     }
 
     die();
@@ -645,11 +644,32 @@ $app->post('/changeLang', function (Request $request) use ($app, $base) {
     return $app->json(['data' => $app['translations'], 'lang' => $lang]);
 })->bind('changeLang');
 
+$app->get('/news', function () use ($app, $base) {
+    $page = 1;
+    $perpage = 4;
+    if (isset($_GET['page']) && $_GET['page'] > 1) {
+        $page = $_GET['page'];
+    }
+    $limits =  'LIMIT '.(($page-1)*$perpage).', '.$perpage;
+    $res = $base->getAllNews($limits);
+    $numPagPage = ceil((int)$res['count'] / (int)$perpage);
+    $paginations = array(
+        'current' => $page,
+        'list'=> array(),
+        'count'=> $numPagPage
+    );
+
+    $paginations['list'] = $base->getPaginations($page, $numPagPage);
+
+    return $app['twig']->render('pages/news.twig', ['newsList' => $res['news'], 'paginations' => $paginations]);
+});
+
 $app->match('/sitemap/generation', function () use ($app, $base) {
 
+    /*define('BASE_URL', 'https://newkatrinasite.awery.com');*/
     define('BASE_URL', 'https://katrina.ae');
 
-    if(file_exists(__DIR__ . '/sitemap/sitemap.xml'))  unlink(__DIR__ . '/sitemap/sitemap.xml');
+    if(file_exists(__DIR__ . '/sitemap.xml'))  unlink(__DIR__ . '/sitemap.xml');
 
 
     $sql = 'SELECT * FROM `news` WHERE `is_deleted` != 1 AND `is_active` = 1 ORDER BY `published` DESC';
@@ -754,26 +774,6 @@ $app->match('/sitemap/generation', function () use ($app, $base) {
     ));
 })->bind('generationSitemap');
 
-$app->get('/news', function () use ($app, $base) {
-    $page = 1;
-    $perpage = 4;
-    if (isset($_GET['page']) && $_GET['page'] > 1) {
-        $page = $_GET['page'];
-    }
-    $limits =  'LIMIT '.(($page-1)*$perpage).', '.$perpage;
-    $res = $base->getAllNews($limits);
-    $numPagPage = ceil((int)$res['count'] / (int)$perpage);
-    $paginations = array(
-        'current' => $page,
-        'list'=> array(),
-        'count'=> $numPagPage
-    );
-
-    $paginations['list'] = $base->getPaginations($page, $numPagPage);
-
-    return $app['twig']->render('pages/news.twig', ['newsList' => $res['news'], 'paginations' => $paginations]);
-});
-
 $app->get('/news/{slug}', function ($slug) use ($app, $base) {
     $news = $base->getNewsBySlug($slug);
 
@@ -860,6 +860,206 @@ $app->post('/updateCustomer', function (Request $request) use ($app, $auth) {
     return $app->json(['data' => $data, 'req' => $res, 'errors' => $errors]);
 });
 
+$app->get('/facebook/callback/register', function () use ($app) {
+
+    try {
+        $accessToken = $app['helper']->getAccessToken();
+    } catch (\Facebook\Exceptions\FacebookResponseException $e) {
+        echo 'Response Exception: ' . $e->getMessage();
+        exit;
+    } catch (\Facebook\Exceptions\FacebookSDKException $e) {
+        echo 'SDK Exception : ' . $e->getMessage();
+        exit;
+    }
+
+    $oAuth2Client = $app['fb']->getOAuth2Client();
+    $app['session']->set('accessToken', (string)json_encode($accessToken));
+    if (isset($accessToken)) {
+        // Logged in!
+        $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+        $response = $app['fb']->get('/me?fields=id,first_name,email,last_name', (string)$accessToken);
+        $fb_user_data = $response->getGraphNode()->asArray();
+        $app['fbLogin']->addInfo('fb_accessToken: ' .$accessToken);
+        $app['fbLogin']->addInfo('fb_user_data: ' .json_encode($fb_user_data));
+        $app['session']->set('fb_accessToken', (string)$accessToken);
+        $app['session']->set('fb_userData', $fb_user_data);
+    } elseif ( $app['helper']->getError()) {
+        $returnUrl = '/';
+        return $app->redirect($returnUrl);
+    }
+
+    $returnUrl = '/';
+    if (isset($_COOKIE['returnFbUrl']) && !empty($_COOKIE['returnFbUrl'])) {
+        $returnUrl = $_COOKIE['returnFbUrl'];
+    }
+
+    return $app->redirect($returnUrl . '?phone_form=1');
+})->bind('FacebookCallbackRegister');
+
+$app->match('/facebook/callback/login', function (Request $request) use ($app, $auth) {
+    /*$data = json_decode($request->getContent(), true);
+    $app['fbLogin']->addInfo('asfasfasf');
+    $errors = [];
+    $access_code = $_GET['code'];
+    var_dump($_GET['code']);
+    if (isset($_COOKIE['CUSTID'])) {
+        $errors['login'] = 'You are login already!';
+    }
+
+    if (empty($errors)) {
+        $ch = curl_init();
+        $endpoint = 'https://graph.facebook.com/debug_token';
+        $params = array('input_token' => '', 'access_token' => $access_code);
+        $url = $endpoint . '?' . http_build_query($params);
+        $url = 'https://graph.facebook.com/v8.0/oauth/access_token?client_id=100667310561658&redirect_uri=https://newkatrinasite.awery.com/facebook/callback/login&client_secret=09de7052f06c3348ad558e8694b385dd&code='.$access_code;
+        $access_token = json_decode(file_get_contents($url), true)['access_token'];
+        $app['fbLogin']->addInfo($url);
+
+        $app['fbLogin']->addInfo('access_token: ' . $access_token);
+        $endpoint = 'https://graph.facebook.com/debug_token';
+        $params = array('input_token' => $access_token, 'access_token' => $access_token);
+
+        $url = $endpoint . '?' . http_build_query($params);
+        $verified_token = json_decode(file_get_contents($url), true);
+
+        $app['fbLogin']->addInfo('Token verification URL: ' . $url);
+        $app['fbLogin']->addInfo('Token validation response: ' . json_encode($verified_token));
+        if(isset($verified_token['data']['user_id'])){
+            $endpoint = 'https://graph.facebook.com/'.$verified_token['data']['user_id'];
+            $params = array('fields' => 'id,name,email', 'access_token' => $access_token);
+            $url = $endpoint . '?' . http_build_query($params);
+            $user_data = json_decode(file_get_contents($url), true);
+            $app['fbLogin']->addInfo('Get user data URL: ' . $url);
+            $app['fbLogin']->addInfo('User data response: ' . json_encode($user_data));
+        }
+
+    }*/
+
+    $errors = [];
+
+    if (isset($_COOKIE['CUSTID'])) {
+        $errors['login'] = 'You are login already!';
+    }
+
+    if (empty($errors)) {
+        try {
+            $accessToken = $app['helper']->getAccessToken();
+        } catch (\Facebook\Exceptions\FacebookResponseException $e) {
+            echo 'Response Exception: ' . $e->getMessage();
+            exit;
+        } catch (\Facebook\Exceptions\FacebookSDKException $e) {
+            echo 'SDK Exception : ' . $e->getMessage();
+            exit;
+        }
+        $oAuth2Client = $app['fb']->getOAuth2Client();
+        $app['fbLogin']->addInfo('oAuth2Client: ' .json_encode($oAuth2Client));
+
+        if (isset($accessToken)) {
+            // Logged in!
+            $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+            $response = $app['fb']->get('/me?fields=id,first_name,email,last_name', (string)$accessToken);
+            $fb_user_data = $response->getGraphNode()->asArray();
+            $app['fbLogin']->addInfo('fb_user_data: ' .json_encode($fb_user_data));
+
+            $app['session']->set('fb_accessToken', (string)$accessToken);
+            $app['session']->set('fb_userData', $fb_user_data);
+        } elseif ( $app['helper']->getError()) {
+            $returnUrl = '/';
+            return $app->redirect($returnUrl);
+        }
+    }
+
+    $returnUrl = '/';
+    if (isset($_COOKIE['returnFbUrl']) && !empty($_COOKIE['returnFbUrl'])) {
+        $returnUrl = $_COOKIE['returnFbUrl'];
+        setcookie('returnFbUrl', '', time() - 36000, '/');
+    }
+
+    if (!$app['session']->has('fb_accessToken') || !$app['session']->has('fb_userData')) {
+        $errors['fb'] = 'Unknown Facebook user!';
+    }
+    $app['fbLogin']->addInfo(json_encode($errors));
+
+    if (empty($errors)) {
+
+        $login = $auth->getCustomerBySocial(array('facebook', $app['session']->get('fb_accessToken')));
+
+        $app['fbLogin']->addInfo('$login$login$login! ' .$login);
+
+        if (!isset($login['id']) || (int)$login['id'] <= 0) {
+            $errors['login'] = $login;
+            $errors['register'] = 'Unknown user!';
+        }
+    }
+    $app['fbLogin']->addInfo($returnUrl);
+    $app['fbLogin']->addInfo(json_encode($errors));
+    if (!empty($errors)) {
+        $returnUrl .= '?errors=' . json_encode($errors);
+    }
+
+    return $app->redirect($returnUrl);
+})->bind('FacebookCallbackLogin');
+
+$app->post('/fb-register', function (Request $request) use ($app, $auth) {
+    $data = json_decode($request->getContent(), true);
+
+    $errors = [];
+    $app['fbLogin']->addInfo('has fb_accessToken: ' .json_encode($app['session']->has('fb_accessToken')));
+    $app['fbLogin']->addInfo('has fb_userData: ' .json_encode($app['session']->has('fb_userData')));
+
+    if (!$app['session']->has('fb_accessToken') || !$app['session']->has('fb_userData')) {
+        $errors['fb'] = 'Unknown Facebook user!';
+    }
+    if (isset($_COOKIE['CUSTID'])) {
+        $errors['login'] = 'You are login already!';
+    }
+
+    $exist_token = $auth->getCustomerBySocial(array('facebook', $app['session']->get('fb_accessToken')));
+    if (is_array($exist_token) && !empty($exist_token)) {
+        $errors['fb_login'] = 'Facebook user already exist!';
+    }
+
+    $data['main_phone'] = str_replace(array(' ', '-'), '', $data['main_phone']);
+    if (!isset($data['main_phone']) || strlen($data['main_phone']) < 13)
+        $errors['phone'] = 'Empty phone!';
+    if (!empty($data['main_phone'][0]) && $data['main_phone'][0] != '+')
+        $errors['phone'] = 'Wrong format phone !';
+
+    if (empty($errors)) {
+        $fb_userData = $app['session']->get('fb_userData');
+
+        $req = [];
+        if(isset($fb_userData['email']))
+            $req['main_email'] = $fb_userData['email'];
+        if(isset($fb_userData['first_name']) && isset($fb_userData['last_name']) )
+            $req['company'] = $fb_userData['first_name'] . ' ' . $fb_userData['last_name'];
+        $req['main_phone'] = $data['main_phone'];
+
+        $res = $auth->signUp($req, 'fb');
+
+        if (!isset($res['res'])) {
+            $errors['register'] = $res;
+        } else {
+            $app['userData'] = $auth->getCustomerData();
+            $socialReq = array($res['login']['id'], 'facebook', $app['session']->get('fb_accessToken'), $app['config']['facebook_app_credentials']['app_id'], $app['config']['facebook_app_credentials']['app_secret']);
+
+            $app['fbLogin']->addInfo('REQUEST data External_Customers.registerSocial: ' .json_encode($socialReq));
+            $social = $auth->registerSocial($socialReq);
+            $app['fbLogin']->addInfo('RESPONSE data External_Customers.registerSocial: ' .json_encode($social));
+
+            if ($social != 1) {
+                $errors['registerSocial'] = $social;
+            }
+
+            if (isset($_COOKIE['returnFbUrl'])) {
+                setcookie('returnFbUrl', '', time() - 36000, '/');
+            }
+        }
+    }
+
+    return $app->json(['data' => $data, 'errors' => $errors]);
+})->bind('fbRegister');
+
 $app->match('/upload', function (Request $request) use ($app) {
     $file = $request->files->get('file');
     $type = $request->get('type');
@@ -902,11 +1102,12 @@ $app->match('/upload', function (Request $request) use ($app) {
 
 $app->before(function (Request $request) use ($app, $base, $auth) {
     $app['request'] = $request;
-    /*$islogged = JsonRPC::loginRPC('decoration');
-
+    $islogged = JsonRPC::loginRPC('decoration');
     if (!isset($islogged['user_data']) || empty($islogged['user_data']) || !isset($islogged['user_data']['id'])) {
-        $result = JsonRPC::loginRPC('login', $app['config']['External_Udb']['login'], $app['config']['External_Udb']['passwd']);
-    }*/
+        $log = JsonRPC::loginRPC('login_external', $app['config']['External_Udb']);
+    }
+
+
     $auth->setUserIdentifer();
 
     /*if($app['session']->has('categories'))
@@ -927,7 +1128,7 @@ $app->before(function (Request $request) use ($app, $base, $auth) {
         file_put_contents($directory_full.'/categories.json',json_encode($app['categories']));
     }
 
-    /*$app['prod'] =  JsonRPC::execute('getSiteProducts', array(array("site_category_id" => 10)));
+    /*$app['prod'] =  JsonRPC::execute('External_ProductBooking.getSiteProducts', array(array("site_category_id" => 10)));
     echo '<pre>';
     var_dump($app['prod']);
     die();*/
@@ -943,6 +1144,7 @@ $app->before(function (Request $request) use ($app, $base, $auth) {
     $app['description'] = 'Katrina Sweets & Confectionary, Bakery. Best flavor cakes, pastries and bread in proudly made in U.A.E.';
 
     $items = $base->getUserCart();
+
     $app['carts'] = $items;
 
     if($app['session']->has('languages'))
@@ -957,25 +1159,35 @@ $app->before(function (Request $request) use ($app, $base, $auth) {
 
     if ($app['session']->has('language')) {
         /*$translations = $base->getTranslations($app['session']->get('language'));
-        $app['translations'] = $translations['trans'];*/
-        $app['lang'] = 'en';
+        $app['translations'] = $translations['trans'];
+        $app['lang'] = $translations['lang'];*/
         $app['menu'] = $base->generateMenu($app['session']->get('language'));
     } else {
-       /* $translations = $base->getTranslations('en');
-        $app['translations'] = $translations['trans'];*/
-        $app['lang'] = 'en';
+        /* $translations = $base->getTranslations('en');
+         $app['translations'] = $translations['trans'];
+         $app['lang'] = $translations['lang'];*/
         $app['session']->set('lang', 'en');
         $app['menu'] = $base->generateMenu('en');
     }
 
     $app['errors'] = array();
     if (isset($_COOKIE['CUSTID'])) {
-        $user = $auth->getCustomerData();
-        if($user){
-            $app['userData'] = $user;
-            if ((int)$app['userData']['deleted'] == 1) {
-                $app['session']->remove('CUSTID');
-            }
+        $app['userData'] = $auth->getCustomerData();
+        if ((int)$app['userData']['deleted'] == 1) {
+            $app['session']->remove('CUSTID');
+            setcookie('CUSTID', '', time() - 36000, '/');
+        }
+    }
+
+    if (strpos($request->getPathInfo(), 'facebook') !== false) {
+        $app['fb'] = new \Facebook\Facebook([
+            'app_id' => $app['config']['facebook_app_credentials']['app_id'],
+            'app_secret' => $app['config']['facebook_app_credentials']['app_secret'],
+            'default_graph_version' => 'v8.0'
+        ]);
+        $app['helper'] = $app['fb']->getRedirectLoginHelper();
+        if (isset($_GET['state'])) {
+            $app['helper']->getPersistentDataHandler()->set('state', $_GET['state']);
         }
     }
 });

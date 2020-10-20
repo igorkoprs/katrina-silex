@@ -15,26 +15,30 @@ class Auth extends Base
     {
         $data['company_id'] = 1;
         $data['pin_code'] = substr(rand(), 0, 4);
-        $res = JsonRPC::execute('updateCustomer', array($data));
-
-        if ($res && strrpos($res, 'already used for other customer!') === false) {
+        $res = JsonRPC::execute('External_ProductBooking.updateCustomer', array($data));
+        $this->app['fbLogin']->addInfo('RESPONSE data External_ProductBooking.updateCustomer: ' .json_encode($res));
+        if(strrpos($res, 'already used for other customer!')){
+            return $res;
+        } else if ($res) {
             $req['phone'] = $data['main_phone'];
             $req['pin'] = $data['pin_code'];
+            $this->app['fbLogin']->addInfo('REQUEST data External_ProductBooking.login: ' .json_encode($req));
             $var = $this->signIn($req);
+            $this->app['fbLogin']->addInfo('RESPONSE data External_ProductBooking.login: ' .json_encode($var));
             if($type == 'fb')
                 return array('res' => true, 'login' =>  $var);
             else
                 return true;
         }
 
-        return $res;
+        return $res['data_list'];
     }
 
     public function updateCustomer($data = array())
     {
         $data['id'] = $this->app['userData']['id'];
 
-        $res = JsonRPC::execute('updateCustomer', array($data));
+        $res = JsonRPC::execute('External_ProductBooking.updateCustomer', array($data));
 
         if ($res == $data['id']) {
             $req['phone'] = $this->app['userData']['main_phone'];
@@ -50,39 +54,39 @@ class Auth extends Base
 
     public function resetCustomerPinCode($phone)
     {
-        return JsonRPC::execute('resetCustomerPinCode', array($phone));
+        return JsonRPC::execute('External_ProductBooking.resetCustomerPinCode', array($phone));
     }
 
     public function signIn($data)
     {
         $req[0] = $data['phone'];
         $req[1] = $data['pin'];
-        $res = JsonRPC::execute('login', $req);
+        $res = JsonRPC::execute('External_ProductBooking.login', $req);
+        $this->app['fbLogin']->addInfo('RESPONSE data External_ProductBooking.login: ' .json_encode($res));
 
-        if (!isset($res['data_list']['id']))
+        if (!isset($res['id']))
             return false;
 
-        return $res['data_list'];
+        return $res;
     }
 
     public function isLogged()
     {
-        $res = JsonRPC::execute('is_logged', array(array()));
+        $res = JsonRPC::execute('External_ProductBooking.is_logged', array(array()));
 
         return $res;
     }
 
     public function logout()
     {
-        $res = JsonRPC::execute('logout', array(array()));
+        $res = JsonRPC::execute('External_ProductBooking.logout', array(array()));
 
         return $res;
     }
 
     public function getCustomerData()
     {
-        $res = JsonRPC::execute('getCustomerData', array(array()));
-
+        $res = JsonRPC::execute('External_ProductBooking.getCustomerData', array(array()));
         return $res;
     }
 
@@ -95,7 +99,7 @@ class Auth extends Base
             'to_date' => date('Y-m-d', strtotime('+ 2 year')),
         ];
 
-        $res = JsonRPC::execute('posBookings', array($data));
+        $res = JsonRPC::execute('External_ProductBooking.posBookings', array($data));
 
         if ($res) {
             foreach ($res as &$item) {
@@ -109,7 +113,7 @@ class Auth extends Base
 
     public function getBookingDetails($booking_id = null)
     {
-        $res = JsonRPC::execute('getBookingDetails', array($booking_id));
+        $res = JsonRPC::execute('External_ProductBooking.getBookingDetails', array($booking_id));
 
         return $res;
     }
@@ -170,7 +174,7 @@ class Auth extends Base
      */
     public function createWebBooking($data = array())
     {
-        $res = JsonRPC::execute('createWebBooking', array($data));
+        $res = JsonRPC::execute('External_ProductBooking.createWebBooking', array($data));
 
         return $res;
     }
@@ -191,19 +195,19 @@ class Auth extends Base
 
     public function sendBookingReceivedEmail($booking_id)
     {
-        $res = JsonRPC::execute('sendBookingReceivedEmail', array($booking_id));
+        $res = JsonRPC::execute('External_ProductBooking.sendBookingReceivedEmail', array($booking_id));
 
         return $res;
     }
 
     public function registerSocial($data = array())
     {
-        return $res = JsonRPC::execute('registerSocial', $data);
+        return $res = JsonRPC::execute('External_Customers.registerSocial', $data);
     }
 
     public function getCustomerBySocial($data = array())
     {
-        return $res = JsonRPC::execute('getCustomerIdBySocial', $data);
+        return $res = JsonRPC::execute('External_Customers.getCustomerIdBySocial', $data);
     }
 
 }
