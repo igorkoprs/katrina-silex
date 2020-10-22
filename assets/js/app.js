@@ -198,7 +198,6 @@ function showSideNavProdDetails(prod) {
                     <input class="hidden code" value="' + prod.code + '">\
                     <input class="hidden category_location_id" value="' + prod.category_location_id + '">\
                     <input type="number"  class="hidden" style="vertical-align: middle" id="for-price-details" value="' + prod.price.split(" ")[0] + '">\
-                    <div class="descr" id="modal-descr-details">' + prod.descr + '</div>\
                     <div class="product-modal-remarks">' + prod.remarks + '</div>\
                     <input class="price" id="modal-price-details" value="' + price + '">\
                     <a class="prod_link" href="https://newkatrinasite.awery.com/single/' + prod.id + '"> Read more </a>\
