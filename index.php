@@ -1156,7 +1156,7 @@ $app->before(function (Request $request) use ($app, $base, $auth) {
 
     $file = file_get_contents('translations/en.json');
     $app['translations'] = json_decode($file,TRUE);
-
+    $app['lang'] = 'en';
     if ($app['session']->has('language')) {
         /*$translations = $base->getTranslations($app['session']->get('language'));
         $app['translations'] = $translations['trans'];
