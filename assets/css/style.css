@@ -2849,6 +2849,10 @@ body.blur-mask .modal-product-details {
     border-radius: 5px;
 }
 
+.menu-header-links .menu-links-item.menu-mob-logo img {
+    width: 100%;
+}
+
 @media screen and (max-width: 1200px) {
     .header-menu{
         padding: 18px 10px;
