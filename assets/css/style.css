@@ -1742,6 +1742,18 @@ body.blur-mask .modal-product-details {
     margin: 0 0 40px 0;
 }
 
+.get-quotation.pending-processing {
+    background: url(/assets/images/icon/pending-processing.svg) no-repeat center center;
+    background-size: 80px;
+    height: 80px;
+    transition: .5s ease;
+    position: relative;
+}
+
+.get-quotation.pending-processing .btn-quotation{
+    display: none;
+}
+
 .cart-empty{
     display: flex;
     width: 100%;

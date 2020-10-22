@@ -660,7 +660,7 @@ function checkout() {
     var data = {};
     var pic_lat = $('#pic_lat').val();
     var pic_lng = $('#pic_lng').val();
-
+    $('.get-quotation').toggleClass('pending-processing');
     data['type'] = $('input[name=type]:checked').val();
     if (pic_lat !== '')
         data['google_latitude'] = pic_lat;
@@ -701,6 +701,7 @@ function checkout() {
         url: '/checkout',
         success: function (data) {
             console.log('posBookingsSync: ', data);
+            $('.get-quotation').toggleClass('pending-processing');
             if (Object.keys(data.errors).length > 0) {
                 showErrors(data.errors);
             } else {
@@ -712,6 +713,7 @@ function checkout() {
             }
         },
         error: function (data) {
+            $('.get-quotation').toggleClass('pending-processing');
             console.log('error: ', data);
         },
         dataType: 'json'
