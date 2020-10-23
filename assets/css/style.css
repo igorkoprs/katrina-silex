@@ -2636,6 +2636,10 @@ body.blur-mask .modal-product-details {
     margin-bottom: 10px;
 }
 
+.default-page-container .terms-ul li div{
+    padding-left: 40px;
+}
+
 .default-page-container ul.terms-ul{
     padding-left: 15px;
 }
