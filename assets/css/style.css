@@ -510,6 +510,7 @@ header {
     display: inline-block;
     padding-top: 4px;
     padding-left: 10px;
+    cursor: pointer;
 }
 
 #amount-purchases {
