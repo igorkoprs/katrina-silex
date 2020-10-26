@@ -20,7 +20,8 @@
                                     {% endif %}
                                     <div class="inside-img-block">
                                         <button onclick="showSideNavProdDetails({{ prod|json_encode|e('html_attr')}})">{{ app.translations.details }}</button>
-                                        <button onclick="appendToCart($(this).parent().parent(), 'createItem')">{{ app.translations.to_cart }}</button>
+                                        {#<button onclick="appendToCart($(this).parent().parent(), 'createItem')">{{ app.translations.to_cart }}</button>#}
+                                        <button onclick="ChatFoodWidget.orderNow()">{{ app.translations.to_cart }}</button>
                                     </div>
                                     <input class="hidden category" value="{{ prod.category }}">
                                     <input class="hidden category_id" value="{{ prod.category_id }}">

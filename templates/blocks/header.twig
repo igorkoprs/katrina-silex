@@ -9,7 +9,7 @@
                     <menu class="menu-header-links">
                         <div class="menu-links-item menu-mob-logo">
                             <a class="" href="/">
-                                <img src="/assets/images/logos/logo.png" alt="Katrina logo - best cakes in Dubai, Abu-Dhabi, Sharjah">
+                                <img src="/assets/images/logos/logo.svg">
                             </a>
                         </div>
                         <div class="menu-links-item" style="text-align: left; padding-left: 0">
@@ -42,7 +42,7 @@
                                     <ul class="header-menu-dropdown">
                                         {% for menuChild in menu.children %}
                                             <li class="link-wrap">
-                                                <a href="/{{ menuChild.slug }}"> {{ menuChild.name }} </a>
+                                                <a href="/{{ menuChild.slug }}"> {{ menuChild.name }}</a>
                                             </li>
                                         {% endfor %}
                                     </ul>
@@ -55,7 +55,7 @@
                     <div class="top-communicate">
                         <a class="toggle-menu" onclick="$('body').toggleClass('opened-menu')"></a>
                         <div class="user-basket-block">
-                            <div class="header-user-login">
+                            {# <div class="header-user-login">
                                 <button id="login-show" onclick="$('.login-block-dropdown').toggleClass('active');">
                                     <img src="/assets/images/icon/user-login.svg">
                                     <span id="header-btn-login-text">
@@ -76,11 +76,11 @@
                                         <li><a href="/user-profile" id="drop_login" onclick="">{{ app.translations.user_profile }}</a></li>
                                     {% endif %}
                                 </ul>
-                            </div>
-                            <a class="basket-header" href="/basket">
+                            </div>#}
+                            <a class="basket-header" onclick="ChatFoodWidget.orderNow()">
                                 <span id="amount-purchases">{{ app.carts.count }}</span>
                                 <img src="/assets/images/icon/basket.svg">
-                               {# {% if app.carts.count|length > 0 %}
+                                {# {% if app.carts.count|length > 0 %}
                                     <span id="amount-purchases"> {{ app.carts.count }} ({{ app.carts.amount }} {{ app.config.currency }})</span>
                                 {% else %}
                                     <span id="amount-purchases"> 0 (0 {{ app.config.currency }})</span>
@@ -89,8 +89,8 @@
                         </div>
                         <div class="header-search-block">
                             <a class="icon-search" onclick="searchProducts($('.header-search').val())"></a>
-                            <input type="text" class="header-search" id="header-search-input" placeholder="{{ app.translations.search }}"
-                                    autocomplete="new-password">
+                            <input type="text" id="header-search-input" class="header-search" placeholder="{{ app.translations.search }}"
+                                   autocomplete="new-password">
                             <div id="search-result-container">
 
                             </div>

@@ -8,7 +8,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta content="Bonaprezo website. Bonaprezo nature products" name="description"/>
     {#Meta tags for Facebook sharing start#}
     <meta property="fb:app_id" content="100667310561658"/>
     <meta property="og:type" content="website"/>
@@ -112,7 +111,8 @@
                                 {{ product.price|number_format(2) }} {{ app.config.currency }}
                             </div>
 
-                            <button id="to_cart" style="max-width: 250px; margin-bottom: 10px" class="button-details-to-cart" onclick="appendToCart($(this).parent(), 'createItem')">To Cart</button>
+                            {#<button id="to_cart" style="max-width: 250px; margin-bottom: 10px" class="button-details-to-cart" onclick="appendToCart($(this).parent(), 'createItem')">To Cart</button>#}
+                            <button id="to_cart" style="max-width: 250px; margin-bottom: 10px" class="button-details-to-cart" onclick="ChatFoodWidget.orderNow()">To Cart</button>
                             <div class="sharing-buttons">
                                 <a rel="nofollow" onclick="share_fb(); return false;" target="_blank" id="facebook-sharing"></a>
                                 <a target="_blank" onclick="share_twitter(); return false;" id="twitter-sharing"></a>
@@ -173,5 +173,15 @@
 <script src="/assets/libs/notification.js"></script>
 <script src="/assets/libs/toastr.js"></script>
 <script src="/assets/js/app.js"></script>
+<script type="text/javascript">
+    (function (w, d, s, f) {
+        w['ChatFoodWidgetClient'] = 'katrina-sweets-and-confectionery';
+        var p = d.createElement(s);
+        p.type = 'text/javascript';
+        p.async = true; p.src = f;
+        var c = d.getElementsByTagName('script')[0];
+        c.parentNode.insertBefore(p, c);
+    })(window, document, 'script', 'https://widget.chatfood.io/widget.v1.js')
+</script>
 </body>
 </html>

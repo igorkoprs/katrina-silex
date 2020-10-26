@@ -204,6 +204,7 @@ $app->post('/loginCustomer', function (Request $request) use ($app, $auth, $base
 })->bind('loginCustomer');
 
 $app->get('/basket', function (Symfony\Component\HttpFoundation\Request $request) use ($app, $base) {
+    return $app['twig']->render('pages/404.twig');
     $items = $base->getUserCart(true);
     $warehouses = $base->getWarehouses();
     $cities = $base->getCities();

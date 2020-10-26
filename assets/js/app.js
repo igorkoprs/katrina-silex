@@ -126,13 +126,13 @@ $(document).ready(function () {
 
     }
 
-    $('.basket-header').on("click", function () {
+    /*$('.basket-header').on("click", function () {
         $("#delivery-conditions").modal('show');
         $('.delivery-close-modal-button').on("click", function () {
             window.location.href = '/basket';
         });
         return false;
-    });
+    });*/
 
     $('.parent-link').on("click", function () {
         $(this).parent().children(".header-menu-dropdown").toggleClass('show-menu-item');
@@ -207,7 +207,8 @@ function showSideNavProdDetails(prod) {
                         <button class="plus-minus" id="plus-details">+</button>\
                     </div>\
                     <div class="amount" id="modal-amount-details">' + price + ' </div>\
-                   <button class="button-details-to-cart" onclick="appendToCart($(this).parent(), \'createItem\')">To cart</button>\
+                   <button class="button-details-to-cart" onclick="ChatFoodWidget.orderNow()">To cart</button>\
+                   <!--<button class="button-details-to-cart" onclick="appendToCart($(this).parent(), \'createItem\')">To cart</button>-->\
                 ');
 
     $('#modal-number-details').keyup(function () {
