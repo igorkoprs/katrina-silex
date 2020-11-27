@@ -122,6 +122,15 @@ var all_shops = [
         social: '',
         email: '',
         time: 'suspended until Abu-Dhabi Gov. notice.'
+    },
+    {
+        lat: 25.330868,
+        lng: 55.429853,
+        name: 'Zawaya Walk, University City Rd, Al Shahba',
+        tel: '065462131',
+        social: 'https://wa.me/971503025720',
+        email: 'ZawayaWalk@katrinasweets.com',
+        time: 'Sat - Wed 10 am till 10 pm <br> Thu - Fri 10 am till 12 pm'
     }
 ];
 
