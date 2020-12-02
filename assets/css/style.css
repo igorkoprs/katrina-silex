@@ -2897,7 +2897,34 @@ body.blur-mask .modal-product-details {
 }
 
 .modal-building-image{
+    display: inline-block;
     width: 100%;
+    position: relative;
+    height: 440px;
+}
+
+.modal-building-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-building-image .slick-prev:before,.modal-building-image .slick-next:before{
+    content: '';
+}
+
+.modal-building-image-item {
+    width: 100%;
+    height: 440px;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+}
+
+.modal-building-image-item img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 .user-name-block{

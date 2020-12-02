@@ -154,7 +154,43 @@ $(document).ready(function () {
         var img = $(this).find('img')[0];
         var city_address = $(this).find('.city-address').val();
         var building_address = $(this).find('.building-address').val();
-        $('.modal-building-image').attr('src', $(img).attr('src').replace('small.png', 'big.jpg'));
+        $('.modal-building-image').hide();
+        $('.modal-building-image').html('');
+
+        if($(this).find('.gallery-list').length > 0){
+            var gallery_path = $(this).find('.gallery-list').val().split(';');
+            for(let i = 0; i < gallery_path.length; i++) {
+                $('.modal-building-image').append(
+                    '<div class="modal-building-image-item">' +
+                    '<img src="/assets/images/contacts-building/' + gallery_path[i] + '">' +
+                    '</div>'
+                );
+            }
+            setTimeout(() => {
+                if($('.modal-building-image').hasClass('slick-initialized')){
+                    $('.modal-building-image').slick("refresh");
+                    $('.modal-building-image').show();
+                } else {
+                    $('.modal-building-image').slick({
+                        arrow: true,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        dots: false,
+                        speed: 1000,
+                        fade: true,
+                        prevArrow: '<button class="slick-prev slick-arrow" type="button" style="display: block;"></button>',
+                        nextArrow: '<button class="slick-next slick-arrow" type="button" style="display: block;"></button>',
+                    });
+                    $('.modal-building-image').show();
+                }
+            }, 500)
+
+        } else{
+            $('.modal-building-image').append(
+                '<img src="' + $(img).attr('src').replace('small.png', 'big.jpg') + '">'
+            );
+            $('.modal-building-image').show();
+        }
         $('.modal-city-address').html(city_address);
         $('.modal-building-address').html(building_address);
         $("#contact-building-image").modal('show');
