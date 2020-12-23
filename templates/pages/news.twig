@@ -14,7 +14,7 @@
                             <img src="https://katrina.ae/uploads/news/{{ news.image }}">
                         </a>
                         <div class="news-item-descr">
-                            {{ news.short_descr }}
+                            {{ news.short_descr|raw }}
                             <a href="/news/{{ news.slug }}">Read more</a>
                         </div>
                     </div>
