@@ -24,9 +24,15 @@
                                                 <span>{{ categories.name }}</span>
                                                 <ul class="header-children-dropdown">
                                                     {% for child in categories.children %}
-                                                        <li>
-                                                            <a href="/prices/{{ child.id }}">{{ child.name }}</a>
-                                                        </li>
+                                                        {% if child.id == 39 %}
+                                                            <li>
+                                                                <a href="https://www.weddingcake.ae/" target="_blank">{{ child.name }}</a>
+                                                            </li>
+                                                        {% else %}
+                                                            <li>
+                                                                <a href="/prices/{{ child.id }}">{{ child.name }}</a>
+                                                            </li>
+                                                        {% endif %}
                                                     {% endfor %}
                                                 </ul>
                                             </div>
