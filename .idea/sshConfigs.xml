@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SshConfigs">
     <configs>
-      <sshConfig host="me-south-1.awery.com" id="cad6ad90-3f10-42b6-84aa-8ae46da045ea" keyPath="C:\Users\Юзер\Documents\ssh_private_key.ppk" port="2218" nameFormat="DESCRIPTIVE" username="acmdev" />
+      <sshConfig host="me-south-1.awery.com" id="cad6ad90-3f10-42b6-84aa-8ae46da045ea" keyPath="C:\Account\ssh-keys\private-key.ppk" port="2218" nameFormat="DESCRIPTIVE" username="acmdev" />
     </configs>
   </component>
 </project>

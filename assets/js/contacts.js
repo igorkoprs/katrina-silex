@@ -11,35 +11,48 @@ $(document).ready(function () {
 });
 var latLng = [
     {
-        lat: 25.221969,
-        lng: 55.434560
+        lat: 25.221829,
+        lng: 55.434515
     },
     {
-        lat: 25.115472,
-        lng: 55.195437
+        lat: 25.099150,
+        lng: 55.205056
     },
     {
-        lat: 25.233012,
-        lng: 55.385493
+        lat: 25.232732,
+        lng: 55.385531
     },
     {
         lat: 25.115208,
         lng: 55.195457
     },
     {
-        lat: 25.099363,
-        lng: 55.205058
-
+        lat: 25.2648841,
+        lng: 55.3741042
     },
     {
         lat: 25.175888,
         lng: 55.386881
-
     },
     {
-        lat: 25.143527,
-        lng: 55.206279
-
+        lat: 25.143454,
+        lng: 55.206300
+    },
+    {
+        lat: 24.333066,
+        lng: 54.523828
+    },
+    {
+        lat: 25.330868,
+        lng: 55.429853
+    },
+    {
+        lat: 24.312568,
+        lng: 54.616897
+    },
+    {
+        lat: 24.488455,
+        lng: 54.606527
     }
 ];
 var all_markers = [];
@@ -126,15 +139,34 @@ var all_shops = [
     {
         lat: 25.330868,
         lng: 55.429853,
-        name: 'Zawaya Walk, University City Rd, Al Shahba',
+        name: 'Al Shahba, Sharjah',
         tel: '065462131',
         social: 'https://wa.me/971503025720',
         email: 'ZawayaWalk@katrinasweets.com',
+        time: 'Sat - Wed 10 am till 10 pm <br> Thu - Fri 10 am till 12 pm'
+    },
+    {
+        lat: 24.312568,
+        lng: 54.616897,
+        name: 'Baniyas area, Abu-Dhabi',
+        tel: '026321454',
+        social: '050 134 7622',
+        email: 'baniyas@katrinasweets.com',
+        time: 'Sun - Wed 10 am till 10 pm <br> Thu - Sat 10 am till 12 pm'
+    },
+    {
+        lat: 24.488455,
+        lng: 54.606527,
+        name: 'Yas Island, Abu-Dhabi',
+        tel: '026212411',
+        social: '0508467993',
+        email: 'yasmall@katrinasweets.com',
         time: 'Sat - Wed 10 am till 10 pm <br> Thu - Fri 10 am till 12 pm'
     }
 ];
 
 var map, infoBubble, to;
+
 
 function initMap() {
     var styles = [

@@ -3,7 +3,14 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="5151d448-e8c6-4d97-94ce-928267681d1b" name="hz7.awery.aero (project level) (project level)">
-        <fileTransfer accessType="SFTP" host="me-south-1.awery.com" port="2218" sshConfigId="cad6ad90-3f10-42b6-84aa-8ae46da045ea" sshConfig="acmdev@me-south-1.awery.com:2218 key" keyPair="true">
+        <fileTransfer rootFolder="/home/acmdev" accessType="SFTP" host="me-south-1.awery.com" port="2218" sshConfigId="cad6ad90-3f10-42b6-84aa-8ae46da045ea" sshConfig="acmdev@me-south-1.awery.com:2218 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="e4a65fa1-b95a-42a8-8e35-60bacb6d73b8" name="katrina">
+        <fileTransfer rootFolder="/web/site/katrina.ae/www" accessType="SFTP" host="me-south-1.awery.com" port="2218" sshConfigId="cad6ad90-3f10-42b6-84aa-8ae46da045ea" sshConfig="acmdev@me-south-1.awery.com:2218 key" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
