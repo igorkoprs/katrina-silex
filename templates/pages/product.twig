@@ -88,7 +88,7 @@
                             <input class="hidden category_id" value="{{ product.category_id }}">
                             <input class="hidden id" value="{{ product.id }}">
                             <input class="hidden unit" value="{{ product.unit }}">
-                            <input class="hidden price" value="{{ product.price|number_format(2) }}" id="for-price-details">
+                            <input class="hidden price" value="{{ product.price + 0 }}" id="for-price-details">
                             <input class="hidden code" value="{{ product.code }}">
                             <input class="hidden category_location_id" value="{{ product.category_location_id }}">
                             <div class="hidden img">
@@ -99,8 +99,8 @@
 
                             <div class="descr" id="modal-descr-details">{{ product.descr }}</div>
                             <div class="remark product-modal-remarks" style="font-size: 18px; padding: 10px 15px">{{ product.remarks }}</div>
-                            <div class="price" id="modal-price-details" style="padding-bottom: 15px">{{ product.price|number_format(2) }} {{ app.config.currency }}</div>
-                            <input type="number" class="hidden" id="for-price-details" value="{{ product.price|number_format(2) }}">
+                            <div class="price" id="modal-price-details" style="padding-bottom: 15px">{{ product.price + 0 }} {{ app.config.currency }}</div>
+                            <input type="number" class="hidden" id="for-price-details" value="{{ product.price + 0 }}">
 
                             <div class="qty change-qty" id="qty-details">
                                 <button class="plus-minus" id="minus-details">-</button>
@@ -108,7 +108,7 @@
                                 <button class="plus-minus" id="plus-details">+</button>
                             </div>
                             <div class="amount" id="modal-amount-details" style="padding: 15px 0;">
-                                {{ product.price|number_format(2) }} {{ app.config.currency }}
+                                {{ product.price + 0 }} {{ app.config.currency }}
                             </div>
 
                             {#<button id="to_cart" style="max-width: 250px; margin-bottom: 10px" class="button-details-to-cart" onclick="appendToCart($(this).parent(), 'createItem')">To Cart</button>#}

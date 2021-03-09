@@ -119,11 +119,11 @@
                                             </td>
                                             <td style=" vertical-align: middle;">
                                                 <b class="tablesaw-cell-label">QTY:</b>
-                                                <span class="tablesaw-cell-content tablesaw-cell-number">{{ item.qty|number_format(2) }}</span>
+                                                <span class="tablesaw-cell-content tablesaw-cell-number">{{ item.qty + 0 }}</span>
                                             </td>
                                             <td style=" vertical-align: middle;">
                                                 <b class="tablesaw-cell-label">Price:</b>
-                                                <span class="tablesaw-cell-content tablesaw-cell-number">{{ item.price|number_format(2) }}</span>
+                                                <span class="tablesaw-cell-content tablesaw-cell-number">{{ item.price + 0 }}</span>
                                             </td>
                                             <td style="vertical-align: middle;">
                                                 <b class="tablesaw-cell-label">Amount:</b>
@@ -170,10 +170,10 @@
                                         onclick="$('#pam').val($(this).data('value'));" data-value="{{ details.booking.cost }}">100%
                                 </button>
                                 <button class="btn btn-default" style="margin: 10px; display: inline-block;" id="p75"
-                                        onclick="$('#pam').val($(this).data('value'));" data-value="{{ (details.booking.cost * 0.75)|number_format(2) }}">75%
+                                        onclick="$('#pam').val($(this).data('value'));" data-value="{{ (details.booking.cost * 0.75) + 0 }}">75%
                                 </button>
                                 <button class="btn btn-default" style="margin: 10px; display: inline-block;" id="p50"
-                                        onclick="$('#pam').val($(this).data('value'));" data-value="{{ (details.booking.cost * 0.5)|number_format(2) }}">50%
+                                        onclick="$('#pam').val($(this).data('value'));" data-value="{{ (details.booking.cost * 0.5) + 0 }}">50%
                                 </button>
                                 <div class="clearfix"></div>
                             </div>

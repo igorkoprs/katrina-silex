@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="product-descr-block">
                                     <p>{{ prod.descr }}</p>
-                                    <p>{{ prod.price|number_format(2) }} {{ app.config.currency }}</p>
+                                    <p>{{ prod.price + 0 }} {{ app.config.currency }}</p>
                                 </div>
                             </div>
                         {% endfor %}
