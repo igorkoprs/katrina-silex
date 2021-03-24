@@ -8,11 +8,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta property="og:title" content="{{ app.title }}" />
-    <meta property="og:description" content="{{ app.description }}" />
+    <meta property="og:title" content="{{ app.title }}"/>
+    <meta property="og:description" content="{{ app.description }}"/>
     <meta property="og:url" content="{{ app.request.uri }}"/>
-    <meta property="og:image" content="http://https://katrina.ae/wp-content/themes/katrina/upload/images/Katrina_logo_small.jpg">
-    <meta name="google-site-verification" content="nrcFuFzcJOoluDgyNT5z5VZ92d0Vx4LGJzZtKxCCfjM" />
+    <meta property="og:image"
+          content="http://https://katrina.ae/wp-content/themes/katrina/upload/images/Katrina_logo_small.jpg">
+    <meta name="google-site-verification" content="nrcFuFzcJOoluDgyNT5z5VZ92d0Vx4LGJzZtKxCCfjM"/>
     <title>{{ app.title }}</title>
     <link rel="stylesheet" href="/assets/css/style.css?v=19">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -22,7 +23,8 @@
     <link rel="stylesheet" href="/assets/css/toastr.min.css">
     <link rel="stylesheet" href="/assets/css/intlTelInput.css">
     <link rel="shortcut icon" href="/assets/images/favicon.png" type="image/png">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          crossorigin="anonymous">
     <script src="/assets/libs/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="/assets/libs/infobubble.js"></script>
 </head>
@@ -64,14 +66,16 @@
 <script src="/assets/libs/utils.js"></script>
 <script src="/assets/libs/intlTelInput.min.js"></script>
 <script src="/assets/js/app.js"></script>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&autoLogAppEvents=1&version=v8.0&appId=100667310561658" nonce="uMvPMkLM"></script>
+<script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&autoLogAppEvents=1&version=v8.0&appId=100667310561658"
+        nonce="uMvPMkLM"></script>
 <script>
-    window.fbAsyncInit = function() {
+    window.fbAsyncInit = function () {
         FB.init({
-            appId      : '100667310561658',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v8.0'
+            appId: '100667310561658',
+            cookie: true,
+            xfbml: true,
+            version: 'v8.0'
         });
     };
 </script>
@@ -81,7 +85,8 @@
         w['ChatFoodWidgetClient'] = 'katrina-sweets-and-confectionery';
         var p = d.createElement(s);
         p.type = 'text/javascript';
-        p.async = true; p.src = f;
+        p.async = true;
+        p.src = f;
         var c = d.getElementsByTagName('script')[0];
         c.parentNode.insertBefore(p, c);
     })(window, document, 'script', 'https://widget.chatfood.io/widget.v1.js')
@@ -90,10 +95,41 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTD5PQR46"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
     gtag('js', new Date());
 
     gtag('config', 'G-0HTD5PQR46');
+</script>
+<script type="text/javascript">
+    var options = {
+        whatsapp: "+10504772947", // WhatsApp number
+        call_to_action: "Message us", // Call to action
+        position: "right", // Position may be 'right' or 'left',
+        callback: () => console.log('FUCK')
+    };
+    var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = url + '/widget-send-button/js/init.js';
+    s.onload = function () {
+        WhWidgetSendButton.init(host, proto, options);
+        window.waitChatInterval = setInterval(() => {
+            let elems = Array.from(document.body.querySelectorAll('div')).reverse().filter(item => item.id.startsWith('gb-widget'));
+            let elem = elems && elems[0];
+            if (!elem) return;
+
+            elem.style.right = '20px';
+            elem.style.bottom = '80px';
+            clearInterval(window.waitChatInterval)
+        }, 500)
+    };
+    var x = document.getElementsByTagName('script')[0];
+    x.parentNode.insertBefore(s, x);
 </script>
 </body>
 </html>
