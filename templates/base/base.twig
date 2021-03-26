@@ -106,11 +106,12 @@
 </script>
 <script type="text/javascript">
     var options = {
-        whatsapp: "+10504772947", // WhatsApp number
+        whatsapp: "+9714772947", // WhatsApp number
         call_to_action: "Message us", // Call to action
         position: "right", // Position may be 'right' or 'left',
         callback: () => console.log('FUCK')
     };
+    //sc-7dvmpp-1 dfBDQI
     var proto = document.location.protocol, host = "getbutton.io", url = proto + "//static." + host;
     var s = document.createElement('script');
     s.type = 'text/javascript';
@@ -122,7 +123,11 @@
             let elems = Array.from(document.body.querySelectorAll('div')).reverse().filter(item => item.id.startsWith('gb-widget'));
             let elem = elems && elems[0];
             if (!elem) return;
-
+            const links = elem.querySelectorAll('div > a');
+            console.log(links)
+            links.forEach((elem) => {
+                if(elem.innerText === 'GetButton') elem.innerText = '';
+            })
             elem.style.right = '20px';
             elem.style.bottom = '80px';
             clearInterval(window.waitChatInterval)
