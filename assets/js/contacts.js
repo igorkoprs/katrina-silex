@@ -355,12 +355,15 @@ function initMap() {
         }
     ];
 
-    var styledMap = new google.maps.StyledMapType(styles,
-        {name: 'Styled Map'});
+    var styledMap = new google.maps.StyledMapType(styles, {name: 'Styled Map'});
 
-    var centerLatLng = new google.maps.LatLng(25.182732, 55.334515);
+    var centerLatLng = new google.maps.LatLng(24.857125, 55.000000);
     var mapOptions = {
-        zoom: 11,
+        zoom: 9,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_TOP
+        },
         navigationControl: false,
         mapTypeControl: false,
         scaleControl: false,
