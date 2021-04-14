@@ -548,7 +548,7 @@ $app->match('/migs_request', function (Symfony\Component\HttpFoundation\Request 
         'vpc_MerchTxnRef' => 'REF_' . time(),
         'vpc_Merchant' => $merchantId,
         'vpc_OrderInfo' => $req['booking_id'],
-        'vpc_ReturnURL' => 'https://newkatrinasite.awery.com/booking-result',
+        'vpc_ReturnURL' => 'https://katrina.ae/booking-result',
         'vpc_Version' => '1',
         'vpc_SecureHashType' => 'SHA256',
     );
@@ -615,16 +615,16 @@ $app->match('/booking-result', function (Symfony\Component\HttpFoundation\Reques
             $res = JsonRPC::execute('External_ProductBooking.createCakePayment', array($req));
             fwrite($file,json_encode($req) . "\n\n");
             fclose($file);
-            header('Location: https://newkatrinasite.awery.com/booking?pay=success');
+            header('Location: https://katrina.ae/booking?pay=success');
         } else {
             fwrite($file, "\n");
             fclose($file);
-            header('Location: https://newkatrinasite.awery.com/booking?pay=error');
+            header('Location: https://katrina.ae/booking?pay=error');
         }
     } else {
         fwrite($file, "\n");
         fclose($file);
-        header('Location: https://newkatrinasite.awery.com/booking?pay=error');
+        header('Location: https://katrina.ae/booking?pay=error');
     }
 
     die();
