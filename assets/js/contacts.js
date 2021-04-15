@@ -15,24 +15,24 @@ var latLng = [
         lng: 55.434515
     },
     {
-        lat: 25.099150,
-        lng: 55.205056
+        lat: 25.1152201,
+        lng: 55.19534
     },
     {
-        lat: 25.232732,
-        lng: 55.385531
+        lat: 25.2325937,
+        lng: 55.3857605,
     },
     {
-        lat: 25.115208,
-        lng: 55.195457
+        lat: 25.0989525,
+        lng: 55.2047854
     },
     {
-        lat: 25.2648841,
-        lng: 55.3741042
+        lat: 25.2552027,
+        lng: 55.397251,
     },
     {
-        lat: 25.175888,
-        lng: 55.386881
+        lat: 25.1754482,
+        lng: 55.3871286
     },
     {
         lat: 25.143454,
@@ -51,8 +51,8 @@ var latLng = [
         lng: 54.616897
     },
     {
-        lat: 24.488455,
-        lng: 54.606527
+        lat: 24.4880859,
+        lng: 54.6085739,
     }
 ];
 var all_markers = [];
@@ -68,8 +68,8 @@ var all_shops = [
 //                ramadantime: '<b>' + 'Eid Timing' + '</b>' + '<br>' + '7 a.m till 12 midnight'
     },
     {
-        lat: 25.099150,
-        lng: 55.205056,
+        lat: 25.1152201,
+        lng: 55.19534,
         name: 'Al Barsha, Dubai',
         tel: '04-379 47 12/ 04-399 47 07',
         social: '056-573 17 27',
@@ -78,8 +78,8 @@ var all_shops = [
 //                ramadantime: '<b>' + 'Eid Timing' + '</b>' + '<br>' + '7 a.m till 12 midnight'
     },
     {
-        lat: 25.232732,
-        lng: 55.385531,
+        lat: 25.2325937,
+        lng: 55.3857605,
         name: 'Al Rashidiya, Bin Sougat Centre, Dubai',
         tel: '04-284 09 61',
         social: '056-756 83 90',
@@ -88,8 +88,8 @@ var all_shops = [
 //                ramadantime: '<b>' +  'Eid Timing' + '</b>' + '<br>' + '7 a.m till 12 midnight'
     },
     {
-        lat: 25.115208,
-        lng: 55.195457,
+        lat: 25.0989525,
+        lng: 55.2047854,
         name: 'Kiosk at Barsha Mall, Dubai',
         tel: '04-347 10 03',
         social: '',
@@ -98,8 +98,8 @@ var all_shops = [
 //                ramadantime: '<b>' + 'Eid Timing' + '</b>' + '<br>' +  '9 a.m. 10 p.m'
     },
     {
-        lat: 25.2648841,
-        lng: 55.3741042,
+        lat: 25.2552027,
+        lng: 55.397251,
         name: 'Kiosk at Emirates Coop, Dubai',
         tel: '056-640 82 92',
         social: '',
@@ -108,11 +108,11 @@ var all_shops = [
 //                ramadantime: '<b>' + 'Eid Timing' + '</b>'  + '<br>' +  '10 a.m till 11 p.m'
     },
     {
-        lat: 25.175888,
-        lng: 55.386881,
+        lat: 25.1754482,
+        lng: 55.3871286,
         name: 'Kiosk at Union Coop, Al Aweer',
         tel: '050-195-33-64',
-        time:'from 9 AM till 6 PM all days,  temporary',
+        time: 'from 9 AM till 6 PM all days,  temporary',
         social: '',
         email: ''
 //                ramadantime: ''
@@ -155,8 +155,8 @@ var all_shops = [
         time: 'Sun - Wed 10 am till 10 pm <br> Thu - Sat 10 am till 12 pm'
     },
     {
-        lat: 24.488455,
-        lng: 54.606527,
+        lat: 24.4880859,
+        lng: 54.6085739,
         name: 'Yas Island, Abu-Dhabi',
         tel: '026212411',
         social: '0508467993',
