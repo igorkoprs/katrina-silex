@@ -236,7 +236,7 @@ function showSideNavProdDetails(prod) {
                     <input type="number"  class="hidden" style="vertical-align: middle" id="for-price-details" value="' + prod.price.split(" ")[0] + '">\
                     <div class="product-modal-remarks">' + prod.remarks + '</div>\
                     <input class="price" id="modal-price-details" value="' + price + '">\
-                    <a class="prod_link" href="https://newkatrinasite.awery.com/single/' + prod.id + '"> Read more </a>\
+                    <a class="prod_link" href="https://katrina.ae/single/' + prod.id + '"> Read more </a>\
                      <div class="qty" id="modal-qty-details">\
                         <button class="plus-minus" id="minus-details">-</button>\
                         <input type="text" id="modal-number-details" class="form-control" value="1">\
