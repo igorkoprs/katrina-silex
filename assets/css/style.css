@@ -2842,7 +2842,7 @@ body.blur-mask .modal-product-details {
     background-color: rgba(0,0,0,0.3);
 }
 
-.contact-details-content{
+.contact-details-content {
     width: calc(100% - 160px);
     display: flex;
     flex-direction: column;
@@ -2859,6 +2859,30 @@ body.blur-mask .modal-product-details {
     margin-left: 10px;
     font-weight: 500;
 }
+
+.contact-details-content-new {
+    margin-left: 10px;
+}
+
+.contact-details-content-new div {
+    display: flex;
+    align-items: center;
+}
+
+.contact-details-content-new div a{
+    color: #000000;
+    font-size: 14px;
+    line-height: 22px;
+    font-family: 'Raleway', sans-serif;
+    text-align: left;
+    font-weight: 500;
+}
+
+.contact-details-content-new div a img {
+    width: 16px;
+    margin-right: 10px;
+}
+
 
 .contact-address{
     background: url(/assets/images/icon/pin.svg) no-repeat left center;
