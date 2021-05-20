@@ -221,6 +221,7 @@ function showSideNavProdDetails(prod) {
         }
         price += ' AED';
     } else {
+        prod.price = "0";
         price = '';
     }
     $('.product-details-items').html('');
