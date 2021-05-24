@@ -2925,6 +2925,7 @@ body.blur-mask .modal-product-details {
     width: 100%;
     position: relative;
     height: 440px;
+    overflow-y: hidden;
 }
 
 .modal-building-image img{
