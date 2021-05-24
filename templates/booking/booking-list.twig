@@ -7,7 +7,9 @@
     <div class="booking-list-container">
         <div class="content">
             {% if booking|length < 1 %}
-                <h1>Booking is Empty</h1>
+                {#<h1>Booking is Empty</h1>#}
+                <h1>Payment response</h1>
+                <a href="/prices/10" class="btn button-basket">Back</a>
             {% else %}
                 <div id="booking_details">
                     <div class="panel-heading">
