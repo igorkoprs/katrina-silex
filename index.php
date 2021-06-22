@@ -487,7 +487,7 @@ $app->post('/uploadAttachToACM', function (Request $request) use ($app, $auth, $
 
 $app->get('/booking', function () use ($app, $auth) {
 
-    if (!isset($_COOKIE['CUSTID']))
+    /*if (!isset($_COOKIE['CUSTID']))
         return $app->redirect('/');
 
     $booking = $auth->getUserBookings();
@@ -497,7 +497,8 @@ $app->get('/booking', function () use ($app, $auth) {
         die();
     }
 
-    return $app['twig']->render('booking/booking-list.twig', ['booking' => $booking]);
+    return $app['twig']->render('booking/booking-list.twig', ['booking' => $booking]);*/
+    return $app['twig']->render('booking/booking-list.twig', ['booking' => array()]);
 })->bind('getBooking');
 
 $app->get('/booking/{base_64}', function ($base_64) use ($app, $auth) {

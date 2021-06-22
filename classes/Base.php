@@ -223,6 +223,10 @@ class Base
     {
         $products = JsonRPC::execute('External_ProductBooking.getSiteProducts', array($data));
 
+        /*foreach ($products['data_list'] as $key => $product){
+            if(!isset($product['price']) || (float)$product['price'] <= 0) unset($products['data_list'][$key]);
+        }*/
+
         return $products['data_list'];
     }
 
