@@ -13,7 +13,7 @@ $(document).ready(function () {
         if (pay_res[1] == 'pay=success') {
             console.log('success');
             sweet_Alert('Success', 'success', true, false);
-        } else if(pay_res[1].indexOf('pay') > -1){
+        } else if (pay_res[1].indexOf('pay') > -1) {
             console.log('error');
             sweet_Alert('Error', 'error', true, false);
         }
@@ -156,10 +156,9 @@ $(document).ready(function () {
         var building_address = $(this).find('.building-address').val();
         $('.modal-building-image').hide();
         $('.modal-building-image').html('');
-
-        if($(this).find('.gallery-list').length > 0){
+        if ($(this).find('.gallery-list').length > 0) {
             var gallery_path = $(this).find('.gallery-list').val().split(';');
-            for(let i = 0; i < gallery_path.length; i++) {
+            for (let i = 0; i < gallery_path.length; i++) {
                 $('.modal-building-image').append(
                     '<div class="modal-building-image-item">' +
                     '<img src="/assets/images/contacts-building/' + gallery_path[i] + '">' +
@@ -167,7 +166,7 @@ $(document).ready(function () {
                 );
             }
             setTimeout(() => {
-                if($('.modal-building-image').hasClass('slick-initialized')){
+                if ($('.modal-building-image').hasClass('slick-initialized')) {
                     $('.modal-building-image').slick("refresh");
                     $('.modal-building-image').show();
                 } else {
@@ -185,7 +184,7 @@ $(document).ready(function () {
                 }
             }, 500)
 
-        } else{
+        } else {
             $('.modal-building-image').append(
                 '<img src="' + $(img).attr('src').replace('small.png', 'big.jpg') + '">'
             );
@@ -195,6 +194,119 @@ $(document).ready(function () {
         $('.modal-building-address').html(building_address);
         $("#contact-building-image").modal('show');
 
+    });
+    // first slider
+    $('.image-building1').on("click", function () {
+        var city_address = $(this).find('.city-address').val();
+        var building_address = $(this).find('.building-address').val();
+        $('.modal-building-image1').hide();
+        $('.modal-building-image1').html('');
+
+        var gallery_path = $(this).find('.gallery-list').val().split(';');
+        for (let i = 0; i < gallery_path.length; i++) {
+            $('.modal-building-image1').append(
+                '<div class="modal-building-image-item">' +
+                '<img src="/assets/images/contacts-building/' + gallery_path[i] + '">' +
+                '</div>'
+            );
+        }
+        setTimeout(() => {
+            if ($('.modal-building-image1').hasClass('slick-initialized')) {
+                $('.modal-building-image1').slick("refresh");
+                $('.modal-building-image1').show();
+            } else {
+                $('.modal-building-image1').slick({
+                    arrow: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: false,
+                    speed: 1000,
+                    fade: true,
+                    prevArrow: '<button class="slick-prev slick-arrow" type="button" style="display: block;"></button>',
+                    nextArrow: '<button class="slick-next slick-arrow" type="button" style="display: block;"></button>',
+                });
+                $('.modal-building-image1').show();
+            }
+        }, 500)
+        $('.modal-city-address1').html(city_address);
+        $('.modal-building-address1').html(building_address);
+        $("#contact-building-image1").modal('show');
+    });
+
+    // second slider
+    $('.image-building2').on("click", function () {
+        var city_address = $(this).find('.city-address').val();
+        var building_address = $(this).find('.building-address').val();
+        $('.modal-building-image2').hide();
+        $('.modal-building-image2').html('');
+
+        var gallery_path = $(this).find('.gallery-list').val().split(';');
+        for (let i = 0; i < gallery_path.length; i++) {
+            $('.modal-building-image2').append(
+                '<div class="modal-building-image-item">' +
+                '<img src="/assets/images/contacts-building/' + gallery_path[i] + '">' +
+                '</div>'
+            );
+        }
+        setTimeout(() => {
+            if ($('.modal-building-image2').hasClass('slick-initialized')) {
+                $('.modal-building-image2').slick("refresh");
+                $('.modal-building-image2').show();
+            } else {
+                $('.modal-building-image2').slick({
+                    arrow: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: false,
+                    speed: 1000,
+                    fade: true,
+                    prevArrow: '<button class="slick-prev slick-arrow" type="button" style="display: block;"></button>',
+                    nextArrow: '<button class="slick-next slick-arrow" type="button" style="display: block;"></button>',
+                });
+                $('.modal-building-image2').show();
+            }
+        }, 500)
+        $('.modal-city-address2').html(city_address);
+        $('.modal-building-address2').html(building_address);
+        $("#contact-building-image2").modal('show');
+    });
+
+    // third slider
+    $('.image-building3').on("click", function () {
+        var city_address = $(this).find('.city-address').val();
+        var building_address = $(this).find('.building-address').val();
+        $('.modal-building-image3').hide();
+        $('.modal-building-image3').html('');
+
+        var gallery_path = $(this).find('.gallery-list').val().split(';');
+        for (let i = 0; i < gallery_path.length; i++) {
+            $('.modal-building-image3').append(
+                '<div class="modal-building-image-item">' +
+                '<img src="/assets/images/contacts-building/' + gallery_path[i] + '">' +
+                '</div>'
+            );
+        }
+        setTimeout(() => {
+            if ($('.modal-building-image3').hasClass('slick-initialized')) {
+                $('.modal-building-image3').slick("refresh");
+                $('.modal-building-image3').show();
+            } else {
+                $('.modal-building-image3').slick({
+                    arrow: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: false,
+                    speed: 1000,
+                    fade: true,
+                    prevArrow: '<button class="slick-prev slick-arrow" type="button" style="display: block;"></button>',
+                    nextArrow: '<button class="slick-next slick-arrow" type="button" style="display: block;"></button>',
+                });
+                $('.modal-building-image3').show();
+            }
+        }, 500)
+        $('.modal-city-address3').html(city_address);
+        $('.modal-building-address3').html(building_address);
+        $("#contact-building-image3").modal('show');
     });
 });
 
@@ -283,8 +395,7 @@ function showSideNavProdDetails(prod) {
             price = parseFloat($('#for-price-details').val());
             $('#modal-number-details').val(1);
             $('#modal-amount-details').text(price.toFixed(2) + ' AED');
-        }
-        else {
+        } else {
             $('#modal-number-details').val(quantity);
             var price = $('#for-price-details').val();
             price = parseFloat(price) * parseFloat(quantity);
