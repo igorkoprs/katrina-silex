@@ -1122,17 +1122,19 @@
         $app['categories'] = $base->getSiteCategories();
         $app['session']->set('categories', $app['categories']);
     }*/
+    
     $cat_path = __DIR__ . '/cache/categories.json';
-    if (file_exists($cat_path)) {
-      $app['categories'] = json_decode(file_get_contents($cat_path), true);
-    } else {
+    
+//    if (file_exists($cat_path)) {
+//      $app['categories'] = json_decode(file_get_contents($cat_path), true);
+//    } else {
       $app['categories'] = $base->getSiteCategories();
       $directory_full = __DIR__ . '/cache';
       if (!is_dir($directory_full))
         mkdir($directory_full, 0755, true);
       fopen($directory_full . "/categories.json", "w");
       file_put_contents($directory_full . '/categories.json', json_encode($app['categories']));
-    }
+//    }
     
     /*$app['prod'] =  JsonRPC::execute('External_ProductBooking.getSiteProducts', array(array("site_category_id" => 10)));
     echo '<pre>';
