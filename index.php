@@ -34,7 +34,7 @@
   
   $app->match('/prices/{id}', function ($id) use ($app, $base) {
     $res = $base->getSiteProducts(array("site_category_id" => $id));
-    /*if (!(bool)$res) return $app['twig']->render('404.twig');*/
+    /*if (!(bool)$res) return $app['twig']->render('pages/.twig');*/
     if (isset($_GET['dd']) && $_GET['dd'] == 1) {
       echo '<pre>';
       var_dump($res);
@@ -43,10 +43,42 @@
     return $app['twig']->render('pages/categories.twig', array('products' => $res));
   })->bind('pricesProducts');
   
+  $app->get('/prices', function () use ($app, $base) {
+    return $app['twig']->render('pages/categories.twig', array('products' => 10));
+  });
+  
+  // https://katrina.ae/single/1827
+  
   $app->get('/single/{id}', function ($id) use ($app, $base) {
     $res['products'] = $base->getSiteProductsByIds((int)$id);
     if (!(bool)$res['products'] && !(bool)$res['categories'])
-      return $app['twig']->render('404.twig');
+      return $app['twig']->render('pages/404.twig');
+
+    $product = $res['products'][0];
+
+    if (isset($product['descr']))
+      $app['title'] = $product['descr'];
+
+    if (isset($_GET['dd']) && $_GET['dd'] == 1) {
+      echo '<pre>';
+      var_dump($product);
+      die();
+    }
+
+    return $app['twig']->render('pages/product.twig', [
+      'product' => $product,
+    ]);
+
+  })->bind('singleProduct');
+  
+  // https://katrina.ae/single?category=12&id=1827
+  
+  $app->get('/single', function (Symfony\Component\HttpFoundation\Request $request) use ($app, $base) {
+    $id = $request->get('id');
+    $category = $request->get('category');
+    $res['products'] = $base->getSiteProductsByIds((int)$id);
+    if (!(bool)$res['products'] && !(bool)$res['categories'])
+      return $app['twig']->render('pages/404.twig');
     
     $product = $res['products'][0];
     
@@ -64,6 +96,15 @@
     ]);
     
   })->bind('singleProduct');
+  
+  
+//  $app->get('/single', function () use ($app, $base) {
+//    return $app['twig']->render('pages/404.twig');
+//  });
+//
+//  $app->get('/single/{id}', function () use ($app, $base) {
+//    return $app['twig']->render('pages/404.twig');
+//  });
   
   $app->post('/search', function (Request $request) use ($app, $base) {
     $data = json_decode($request->getContent(), true);
@@ -788,6 +829,12 @@
     return $app['twig']->render('pages/default-page.twig', array('page' => $page));
   });
   
+  $app->get('/franchise/', function () use ($app, $base) {
+    $page = $base->getPageBySlug('franchise');
+    
+    return $app['twig']->render('pages/default-page.twig', array('page' => $page));
+  });
+  
   $app->get('/companyprofile', function () use ($app, $base) {
     $page = $base->getPageBySlug('companyprofile');
     
@@ -810,9 +857,21 @@
     return $app['twig']->render('pages/404.twig');
   });
   
+  $app->get('/salesb2b', function () use ($app, $base) {
+    return $app['twig']->render('pages/404.twig');
+  });
+  
+  $app->get('/booking-feedback', function () use ($app, $base) {
+    return $app['twig']->render('pages/404.twig');
+  });
+  
   $app->get('/terms-conditions', function () use ($app, $base) {
     $page = $base->getPageBySlug('terms-conditions');
-    
+    return $app['twig']->render('pages/default-page.twig', array('page' => $page));
+  });
+  
+  $app->get('/terms-conditions/', function () use ($app, $base) {
+    $page = $base->getPageBySlug('terms-conditions');
     return $app['twig']->render('pages/default-page.twig', array('page' => $page));
   });
   
@@ -828,6 +887,12 @@
     return $app['twig']->render('pages/default-page.twig', array('page' => $page));
   });
   
+  $app->get('/delivery/', function () use ($app, $base) {
+    $page = $base->getPageBySlug('delivery');
+    
+    return $app['twig']->render('pages/default-page.twig', array('page' => $page));
+  });
+  
   $app->get('/loyalty-program', function () use ($app, $base) {
     $page = $base->getPageBySlug('loyalty-program');
     
@@ -835,15 +900,16 @@
   });
   
   $app->get('/contact', function () use ($app, $base) {
-    
-    
+    return $app['twig']->render('pages/contacts.twig');
+  });
+  
+  $app->get('/contact/', function () use ($app, $base) {
     return $app['twig']->render('pages/contacts.twig');
   });
   
   $app->get('/user-profile', function () use ($app, $base) {
     if (!isset($app['userData']['id']) || (int)$app['userData']['id'] < 1)
       return $app->redirect('/');
-    
     
     return $app['twig']->render('pages/user-profile.twig');
   });

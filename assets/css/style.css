@@ -596,7 +596,7 @@ header {
   color: #ffffff;
 }
 
-.slider-label-block p {
+.slider-label-block h2 {
   font-size: 24px;
   font-weight: 300;
   margin: 0;
@@ -747,12 +747,13 @@ header {
   padding: 5px 0;
 }
 
-.category-img-title h1 {
+.category-img-title h3 {
   margin: 0;
   color: #bf8f67;
   font-size: 24px;
   font-weight: 400;
   transition: all 0.25s ease;
+
 }
 
 .news-image-link {
