@@ -73,38 +73,29 @@
   
   // https://katrina.ae/single?category=12&id=1827
   
-  $app->get('/single', function (Symfony\Component\HttpFoundation\Request $request) use ($app, $base) {
-    $id = $request->get('id');
-    $category = $request->get('category');
-    $res['products'] = $base->getSiteProductsByIds((int)$id);
-    if (!(bool)$res['products'] && !(bool)$res['categories'])
-      return $app['twig']->render('pages/404.twig');
-    
-    $product = $res['products'][0];
-    
-    if (isset($product['descr']))
-      $app['title'] = $product['descr'];
-    
-    if (isset($_GET['dd']) && $_GET['dd'] == 1) {
-      echo '<pre>';
-      var_dump($product);
-      die();
-    }
-    
-    return $app['twig']->render('pages/product.twig', [
-      'product' => $product,
-    ]);
-    
-  })->bind('singleProduct');
-  
-  
-//  $app->get('/single', function () use ($app, $base) {
-//    return $app['twig']->render('pages/404.twig');
-//  });
+//  $app->get('/single', function (Symfony\Component\HttpFoundation\Request $request) use ($app, $base) {
+//    $id = $request->get('id');
+//    $category = $request->get('category');
+//    $res['products'] = $base->getSiteProductsByIds((int)$id);
+//    if (!(bool)$res['products'] && !(bool)$res['categories'])
+//      return $app['twig']->render('pages/404.twig');
 //
-//  $app->get('/single/{id}', function () use ($app, $base) {
-//    return $app['twig']->render('pages/404.twig');
-//  });
+//    $product = $res['products'][0];
+//
+//    if (isset($product['descr']))
+//      $app['title'] = $product['descr'];
+//
+//    if (isset($_GET['dd']) && $_GET['dd'] == 1) {
+//      echo '<pre>';
+//      var_dump($product);
+//      die();
+//    }
+//
+//    return $app['twig']->render('pages/product.twig', [
+//      'product' => $product,
+//    ]);
+//
+//  })->bind('singleProduct');
   
   $app->post('/search', function (Request $request) use ($app, $base) {
     $data = json_decode($request->getContent(), true);
