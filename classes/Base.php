@@ -105,8 +105,8 @@ class Base
                 LEFT JOIN `translations_pages` as `tp` on `tp`.`id_news` = `n`.`id`
                 LEFT JOIN `languages` as `lang` on `lang`.`id` = `tp`.`id_lang`
                 WHERE `lang`.`code` = ? AND `n`.`slug` = ? AND `n`.`is_active` = 1 AND `n`.`is_deleted` = 0";
-        // $news = $this->app['db']->fetchAssoc($sql, array(strtolower($this->app['lang']), $news_slug));
-        $news = $this->app['db']->fetchAssoc($sql, array('en', $news_slug));
+         $news = $this->app['db']->fetchAssoc($sql, array(strtolower($this->app['lang']), $news_slug));
+//        $news = $this->app['db']->fetchAssoc($sql, array('en', $news_slug));
 
         if ($news)
             $news['published'] = date("j F Y", strtotime($news['published']));
