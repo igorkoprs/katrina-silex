@@ -308,6 +308,37 @@ $(document).ready(function () {
         $('.modal-building-address3').html(building_address);
         $("#contact-building-image3").modal('show');
     });
+
+    // Search enter event
+    $("#header-search-input").keyup(function (event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            let inputValue = $(this).val();
+            if (inputValue.length >= 3) {
+                document.location.href = "https://katrina.ae/search-prices/" + inputValue;
+                // let req;
+                // req = JSON.stringify({descr: inputValue});
+                // $('.icon-search').toggleClass('pending-processing');
+                // $.ajax({
+                //     type: "POST",
+                //     async: true,
+                //     data: req,
+                //     xhrFields: {
+                //         withCredentials: true
+                //     },
+                //     crossDomain: true,
+                //     url: '/searchEnter',
+                //     success: function (data) {
+                //     },
+                //     error: function (data) {
+                //         $('.icon-search').toggleClass('pending-processing');
+                //         console.log('error: ', data);
+                //     },
+                //     dataType: 'json'
+                // });
+            }
+        }
+    });
 });
 
 function showSideNavProdDetails(prod) {

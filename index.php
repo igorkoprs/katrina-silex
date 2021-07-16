@@ -47,6 +47,21 @@
     return $app['twig']->render('pages/categories.twig', array('products' => 10));
   });
   
+  $app->match('/search-prices/{inputValue}', function ($inputValue) use ($app, $base) {
+//    $data = json_decode($request->getContent(), true);
+    
+    $products = $base->getSiteProductsByDescr($inputValue);
+    
+    if ($products)
+      foreach ($products as &$item) {
+        $item['descr'] = strtolower($item['descr']);
+      }
+    unset($item);
+    return $app['twig']->render('pages/categories.twig', array('products' => $products));
+    // return $app->json(['products' => $products]);
+  })->bind('pricesSearchProducts');
+  
+  
   // https://katrina.ae/single/1827
   
   $app->get('/single/{id}', function ($id) use ($app, $base) {
