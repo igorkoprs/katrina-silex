@@ -658,7 +658,7 @@
           'web_payment_reference' => $_GET['vpc_TransactionNo'], //auth code
           'payment' => floatval($_GET['vpc_Amount'] / 100),
           'tax_option_id' => 6,
-          'payment_notes' => 'Payment on booking: ' . $_GET['vpc_OrderInfo'] . ' Online transaction reference number: ' . $_GET['vpc_MerchTxnRef'] . ' BatchNo: ' . $_GET['vpc_BatchNo']
+          'payment_notes' => 'Payment on booking: ' . $_GET['vpc_OrderInfo'] . ' Online transaction reference number: ' . $_GET['vpc_MerchTxnRef'] . ' BatchNo: ' . $_GET['vpc_BatchNo'] . ' Amount: ' . floatval($_GET['vpc_Amount'] / 100)
         );
         $res = JsonRPC::execute('External_ProductBooking.createCakePayment', array($req));
         fwrite($file, json_encode($req) . "\n\n");
