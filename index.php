@@ -661,16 +661,17 @@
           'payment_notes' => 'Payment on booking: ' . $_GET['vpc_OrderInfo'] . ' Online transaction reference number: ' . $_GET['vpc_MerchTxnRef'] . ' BatchNo: ' . $_GET['vpc_BatchNo'] . ' Amount: ' . floatval($_GET['vpc_Amount'] / 100)
         );
         $res = JsonRPC::execute('External_ProductBooking.createCakePayment', array($req));
-        fwrite($file, json_encode($req) . "\n\n");
+        fwrite($file, json_encode($req) . "\n");
+        fwrite($file, 'External_ProductBooking.createCakePayment ' . json_encode($res) . "\n\n");
         fclose($file);
         header('Location: https://katrina.ae/booking?pay=success');
       } else {
-        fwrite($file, "\n");
+        fwrite($file, "Wrong Hash!!!\n");
         fclose($file);
         header('Location: https://katrina.ae/booking?pay=error');
       }
     } else {
-      fwrite($file, "\n");
+      fwrite($file, "Wrong Hash 2!!!\n");
       fclose($file);
       header('Location: https://katrina.ae/booking?pay=error');
     }
