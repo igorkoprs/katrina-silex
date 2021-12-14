@@ -15,6 +15,10 @@ var latLng = [
         lng: 55.434515
     },
     {
+        lat: 24.475479,
+        lng: 54.3464562,
+    },
+    {
         lat: 25.1152201,
         lng: 55.19534
     },
@@ -65,6 +69,16 @@ var all_shops = [
         social: '050-394 04 06',
         email: 'orders@katrinasweets.com',
         time: '7 a.m till 12 midnight every day'
+//                ramadantime: '<b>' + 'Eid Timing' + '</b>' + '<br>' + '7 a.m till 12 midnight'
+    },
+    {
+        lat: 24.475479,
+        lng: 54.3464562,
+        name: 'Al Khalidiyah',
+        tel: '02-886 5769',
+        social: '058-534 71 22',
+        email: 'khalidiyah@katrinasweets.com',
+        time: 'Sat - Wed 8 am till 10 pm / Thu - Fri 8 am till 12 am'
 //                ramadantime: '<b>' + 'Eid Timing' + '</b>' + '<br>' + '7 a.m till 12 midnight'
     },
     {
