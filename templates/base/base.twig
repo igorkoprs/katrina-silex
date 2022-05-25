@@ -80,55 +80,55 @@
     };
 </script>
 <div id="fb-root"></div>
-{#<script type="text/javascript">#}
-{#	console.log('here');#}
-{#    (function (w, d, s, f) {#}
-{#        w['ChatFoodWidgetClient'] = 'katrina-sweets-and-confectionery';#}
-{#        var p = d.createElement(s);#}
-{#        p.type = 'text/javascript';#}
-{#        p.async = true;#}
-{#        p.src = f;#}
-{#        var c = d.getElementsByTagName('script')[0];#}
-{#        c.parentNode.insertBefore(p, c);#}
-{#    })(window, document, 'script', 'https://widget.chatfood.io/widget.v1.js')#}
-{#</script>#}
-
 <script type="text/javascript">
-	window.onload = function () {
-		var body = document.body;
-		var script = document.createElement("script");
-		script.src =
-			"https://storage.googleapis.com/prd-radius-frontend/widget/v5/radyes.min.js?v=1.1";
-		script.type = "text/javascript";
-		script.onload = function () {
-			var radyesOptions = {
-				orderBtnBgColor: "#000000",
-				orderBtnTextColor: "#FFFFFF",
-				orderBtnText: "Order Online",
-				welcomeTitle: "Hi there!",
-				welcomeMessage: "Click the button to place your order.",
-				welcomeBtnText: "Order Now!",
-				welcomeTitleColor: "#000000",
-				welcomeBtnBgColor: "#000000",
-				welcomeBtnTextColor: "#FFFFFF",
-				overlayButton: true,
-				welcomeDialog: false,
-				sendOrgin: true,
-				env: "PRD",
-				crossDomainTrack: false,
-				utmTrack: false,
-				widgetPosition: "right bottom",
-				widgetSlide: "RightToLeft",
-			};
-			var radyes = new window.RadyesMsite(
-				"c7b88c232eacaa9637463d1241caf27fc72a2b40e667c8ef",
-				radyesOptions
-			);
-			radyes.init();
-		};
-		body.appendChild(script);
-	};
+	console.log('here');
+    (function (w, d, s, f) {
+        w['ChatFoodWidgetClient'] = 'katrina-sweets-and-confectionery';
+        var p = d.createElement(s);
+        p.type = 'text/javascript';
+        p.async = true;
+        p.src = f;
+        var c = d.getElementsByTagName('script')[0];
+        c.parentNode.insertBefore(p, c);
+    })(window, document, 'script', 'https://widget.chatfood.io/widget.v1.js')
 </script>
+
+{#<script type="text/javascript">#}
+{#	window.onload = function () {#}
+{#		var body = document.body;#}
+{#		var script = document.createElement("script");#}
+{#		script.src =#}
+{#			"https://storage.googleapis.com/prd-radius-frontend/widget/v5/radyes.min.js?v=1.1";#}
+{#		script.type = "text/javascript";#}
+{#		script.onload = function () {#}
+{#			var radyesOptions = {#}
+{#				orderBtnBgColor: "#000000",#}
+{#				orderBtnTextColor: "#FFFFFF",#}
+{#				orderBtnText: "Order Online",#}
+{#				welcomeTitle: "Hi there!",#}
+{#				welcomeMessage: "Click the button to place your order.",#}
+{#				welcomeBtnText: "Order Now!",#}
+{#				welcomeTitleColor: "#000000",#}
+{#				welcomeBtnBgColor: "#000000",#}
+{#				welcomeBtnTextColor: "#FFFFFF",#}
+{#				overlayButton: true,#}
+{#				welcomeDialog: false,#}
+{#				sendOrgin: true,#}
+{#				env: "PRD",#}
+{#				crossDomainTrack: false,#}
+{#				utmTrack: false,#}
+{#				widgetPosition: "right bottom",#}
+{#				widgetSlide: "RightToLeft",#}
+{#			};#}
+{#			var radyes = new window.RadyesMsite(#}
+{#				"c7b88c232eacaa9637463d1241caf27fc72a2b40e667c8ef",#}
+{#				radyesOptions#}
+{#			);#}
+{#			radyes.init();#}
+{#		};#}
+{#		body.appendChild(script);#}
+{#	};#}
+{#</script>#}
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HTD5PQR46"></script>
