@@ -11,7 +11,7 @@
     ->setPassword('AvbuMmlceESCZvvQVBBm9DLvHHrqL3A9qXMNs6XJH73F')
     ->setAuthMode('login');
   
-  $app['mailer'] = Swift_Mailer::newInstance($app['transport']);
+  $app['mailer'] = new Swift_Mailer($app['transport']);
   
   $app->get('/', function () use ($app, $base) {
     
