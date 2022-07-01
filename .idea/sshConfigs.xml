@@ -3,6 +3,7 @@
   <component name="SshConfigs">
     <configs>
       <sshConfig connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="me-south-1.awery.com" id="cad6ad90-3f10-42b6-84aa-8ae46da045ea" keyPath="C:\Account\ssh-keys\private-key.ppk" port="2218" nameFormat="DESCRIPTIVE" username="acmdev" />
+      <sshConfig host="azureuae.awery.aero" id="8060ca26-b60c-41bf-bfb1-451001a32b05" keyPath="$USER_HOME$/.ssh/id_rsa" port="2218" nameFormat="DESCRIPTIVE" username="acmdev" useOpenSSHConfig="true" />
     </configs>
   </component>
 </project>
