@@ -868,8 +868,10 @@
     return $app['twig']->render('pages/404.twig');
   });
   
-  $app->get('/booking-feedback', function () use ($app, $base) {
-    return $app['twig']->render('pages/404.twig');
+  $app->get('/booking-feedback/{id}', function ($id, Symfony\Component\HttpFoundation\Request $request) use ($app, $base) {
+    return $app['twig']->render('pages/feedback.twig', array(
+        'id' => base64_decode($id)
+    ));
   });
   
   $app->get('/terms-conditions', function () use ($app, $base) {

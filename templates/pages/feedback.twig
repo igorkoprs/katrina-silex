@@ -1,0 +1,326 @@
+{% extends 'base/base.twig' %}
+{% block content %}
+    <style>
+        body {
+            background: #FFFFFF url('/assets/images/pattern.jpeg') repeat;
+        }
+
+        .sliders {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .slider {
+            width: 100%;
+            max-width: 1200px;
+            padding: 10px;
+            float: left;
+        }
+
+        .slider > .question {
+            float: left;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 16px;
+            padding: 14px 0;
+        }
+
+        .slider > .answer {
+            float: left;
+            border-radius: 5px;
+            overflow: hidden;
+            background: #FFFFFF;
+            position: relative;
+        }
+
+        .slider-5 > .question, .slider-5 > .answer {
+            width: 50%;
+        }
+
+        .slider-2 > .question {
+            width: 80%;
+        }
+
+        .slider-2 > .answer {
+            width: 20%;
+        }
+
+        .answer-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff0004+0,ffff00+50,00ff00+100 */
+            background: #ff0000; /* Old browsers */
+            background: -moz-linear-gradient(left, #ff0000 0%, #ffff00 50%, #00ff00 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(left, #ff0000 0%, #ffff00 50%, #00ff00 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, #ff0000 0%, #ffff00 50%, #00ff00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0004', endColorstr='#00ff00', GradientType=1); /* IE6-9 */
+            height: 1px;
+            z-index: 10;
+        }
+
+        .answer > .answer-element {
+            float: left;
+            text-align: center;
+            padding: 15px 5px;
+            text-transform: uppercase;
+            background: #FFFFFF;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border-radius: 3px;
+            z-index: 9;
+            position: relative;
+        }
+
+        .slider-5 > .answer > .answer-element {
+            width: 20%;
+        }
+
+        .slider-2 > .answer > .answer-element {
+            width: 50%;
+        }
+
+        .answer > .answer-element.answer-1:hover {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        .answer > .answer-element.answer-2:hover {
+            background: rgba(255, 128, 0, 0.1);
+        }
+
+        .answer > .answer-element.answer-3:hover {
+            background: rgba(255, 255, 0, 0.1);
+        }
+
+        .answer > .answer-element.answer-4:hover {
+            background: rgba(128, 255, 0, 0.1);
+        }
+
+        .answer > .answer-element.answer-5:hover {
+            background: rgba(0, 255, 0, 0.1);
+        }
+
+        .answer > .answer-element.active {
+            z-index: 11;
+        }
+
+        .answer > .answer-element > span {
+            display: block;
+            transform: scale(1);
+            transition: all 0.05s ease;
+            color: #000000;
+        }
+
+        .answer > .answer-element.active > span {
+            color: #FFFFFF;
+            transform: scale(1.1);
+        }
+
+        .answer > .answer-element.answer-1.active {
+            background: rgba(210, 0, 0, 1);
+        }
+
+        .answer > .answer-element.answer-2.active {
+            background: rgba(255, 128, 0, 1);
+        }
+
+        .answer > .answer-element.answer-3.active {
+            background: rgba(230, 230, 0, 1);
+        }
+
+        .answer > .answer-element.answer-4.active {
+            background: rgba(128, 210, 0, 1);
+        }
+
+        .answer > .answer-element.answer-5.active {
+            background: rgba(0, 210, 0, 1);
+        }
+
+        .user-information {
+            width: 100%;
+            padding: 10px;
+        }
+
+        @media (max-width: 930px) {
+            /*.slider > .question, .slider > .answer{
+                width: 100%;
+            }*/
+            .slider > .question {
+                font-size: 14px;
+            }
+
+            .answer > .answer-element > span {
+                font-size: 12px;
+            }
+
+            .slider-5 > .question {
+                width: 40%;
+            }
+
+            .slider-5 > .answer {
+                width: 60%;
+            }
+        }
+
+        @media (max-width: 670px) {
+            .slider > .question, .slider > .answer {
+                width: 100%;
+            }
+
+            .slider > .question {
+                font-size: 16px;
+            }
+
+            .answer > .answer-element > span {
+                font-size: 14px;
+            }
+
+            .slider > .question {
+                padding: 0 0 7px 0;
+            }
+        }
+
+        @media (max-width: 476px) {
+            .slider > .question {
+                font-size: 14px;
+            }
+
+            .answer > .answer-element > span {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .slider > .question {
+                font-size: 12px;
+            }
+
+            .answer > .answer-element > span {
+                font-size: 10px;
+            }
+
+            .slider {
+                padding: 10px 5px;
+            }
+
+            .answer > .answer-element {
+                padding: 10px 0;
+            }
+        }
+    </style>
+    <form method="POST" action="https://dev.hint.ae/service/review/site/new" class="sliders" id="form_hint">
+        <div class="user-information">
+            <textarea name="data[comment]" placeholder="Your comment" class="form-control"
+                      style="width: 100%; margin: 5px 0; resize: none;" rows="3"></textarea>
+            <input type="text" name="data[name]" placeholder="Name" class="form-control"
+                   style="width: 100%;  margin: 5px 0;">
+            <input type="text" name="data[phone]" placeholder="Number phone" class="form-control"
+                   style="width: 100%;  margin: 5px 0;">
+            <input type="text" name="data[mail]" placeholder="Mail" class="form-control"
+                   style="width: 100%; margin: 5px 0;">
+            <input id="booking_id" type="hidden" name="data[booking_id]" value="{{ id }}">
+            <input type="hidden" name="data[link]" value="http://katrina.ae">
+            <input type="submit" value="Send" class="btn btn-default pull-right"
+                   style="margin: 5px 0; min-width:150px;">
+        </div>
+    </form>
+
+    <script>
+		function explode(delimiter, string) {
+			var emptyArray = {0: ''};
+
+			if (arguments.length !== 2
+				|| typeof arguments[0] == 'undefined'
+				|| typeof arguments[1] == 'undefined') {
+				return null;
+			}
+
+			if (delimiter === ''
+				|| delimiter === false
+				|| delimiter === null) {
+				return false;
+			}
+
+			if (typeof delimiter == 'function'
+				|| typeof delimiter == 'object'
+				|| typeof string == 'function'
+				|| typeof string == 'object') {
+				return emptyArray;
+			}
+
+			if (delimiter === true) {
+				delimiter = '1';
+			}
+
+			return string.toString().split(delimiter.toString());
+		}
+
+		function Initialize(code, lang) {
+			if (lang != 'en' && lang != 'ru' && lang != 'ar' && lang != 'ua' && lang != 'de' && lang != 'fr')
+				lang = 'en';
+			$.ajax({
+				type: "POST",
+				url: "https://dev.hint.ae/service/question/list/site",
+				data: {
+					code: code
+				},
+				success: function (data) {
+					if (!data.message) {
+						console.log(data);
+						$('#form_hint').append('<input type="hidden" name="data[code]" value="' + code + '">');
+						/*$('#form_hint').append('<input type="hidden" name="link" value="'+document.URL+'">');*/
+						$(data.questions).each(function (key, val) {
+							console.log('huy',key, val);
+							if (val.type == '0')
+								$('.user-information').before('<div class="slider slider-5">\
+                            <div class="question">' + val[lang] + '</div>\
+                            <div class="answer">\
+                                <div class="answer-gradient"></div>\
+                                <div class="answer-element answer-1" data-value="1"><span>poor</span></div>\
+                                <div class="answer-element answer-2" data-value="2"><span>bad</span></div>\
+                                <div class="answer-element answer-3" data-value="3"><span>average</span></div>\
+                                <div class="answer-element answer-4" data-value="4"><span>good</span></div>\
+                                <div class="answer-element answer-5" data-value="5"><span>excellent</span></div>\
+                                <input type="hidden" name="answers[' + val.id + ']" class="value" value="0">\
+                            </div>\
+                        </div>');
+							else
+								$('.user-information').before('<div class="slider slider-2">\
+                            <div class="question">' + val[lang] + '</div>\
+                            <div class="answer">\
+                                <div class="answer-gradient"></div>\
+                                <div class="answer-element answer-1" data-value="1"><span>no</span></div>\
+                                <div class="answer-element answer-5" data-value="5"><span>yes</span></div>\
+                                <input type="hidden" name="answers[' + val.id + ']" class="value" value="0">\
+                            </div>\
+                        </div>');
+						});
+						$('.answer-element').click(function () {
+							$(this).parent().children('.active').removeClass('active');
+							$(this).addClass('active');
+							$(this).parent().children('input').val($(this).data('value'));
+						});
+						if (window.location.search !== '') {
+							var id = window.location.search.replace('\?', '');
+							id = explode('=', id);
+							if (id[0] == 'id' && parseInt(id[1]) > 0) {
+								$('#form_hint > .user-information').append('<input type="hidden" name="booking" value="' + id[1] + '">');
+							}
+							console.log(id);
+						}
+					} else
+						alert(data.message);
+				},
+				dataType: 'json'
+			});
+		}
+
+		$(document).ready(function () {
+			Initialize('b74fb68d12c755fe26b338ebfcf18a5f', 'en');
+		});
+    </script>
+
+{% endblock %}
