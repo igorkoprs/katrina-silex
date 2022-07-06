@@ -24,7 +24,7 @@ $autoload->add('App\\', __DIR__ . '/../');
 $autoload->register();
 
 $app = new \Silex\Application();
-$app['debug'] = false;
+$app['debug'] = true;
 
 if(file_exists($config_path)) {
     $app['config'] = json_decode(file_get_contents($config_path), true);
