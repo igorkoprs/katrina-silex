@@ -1,8 +1,9 @@
 <?php
-ini_set('error_reporting', E_ALL);
-ini_set('display_errors', 1);
 
 require_once(__DIR__ . '/bootstrap.php');
+
+use Base\JsonRPC;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 $app->match('/login', function (Request $request) use ($app) {
@@ -18,7 +19,8 @@ $app->match('/login', function (Request $request) use ($app) {
 
     $sql = "SELECT * FROM `admin` WHERE `email` = ?";
     $account = $app['db']->fetchAssoc($sql, array($data['email']));
-    if (!(bool)$account) {
+
+    if (!$account) {
         return $app->json(array(
             'error' => 2,
             'message' => 'Account with this ' . (!preg_match('/\@/', $data['email']) ? 'login' : 'email') . ' not found in DB',
