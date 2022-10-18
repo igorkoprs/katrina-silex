@@ -1120,7 +1120,7 @@ function sweet_Alert_Success(text, status, confirm, cancel) {
         confirmButtonColor: '#5cb85c',
         html: true
     }, function (isConfirm) {
-
+		window.location = 'https://katrina.ae/';
     });
 }
 

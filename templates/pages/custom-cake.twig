@@ -83,7 +83,8 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-sm-12 float-left custom-delivery" style="padding-top: 15px;">
                         <div class="icon-time"><img src="/assets/images/icon/time.svg"></div>
-                        <input onkeyup="success()" type="text" class="custom-inputs date" id="ddate2"
+                        <input onchange="success()" onpaste="myFunction()" type="text" class="custom-inputs date"
+                               id="ddate2"
                                placeholder="When to delivery">
                     </div>
                 </div>
@@ -123,7 +124,8 @@
 				document.getElementById('customcakecphone').value === '' ||
 				document.getElementById('customcakeemail').value === '' ||
 				document.getElementById('customcakeweight').value === '' ||
-				document.getElementById('address').value === ''
+				document.getElementById('address').value === '' ||
+				document.getElementById('ddate2').value === ''
 			) {
 				document.getElementById('sendcustomcake').disabled = true;
 			} else {
@@ -183,6 +185,8 @@
 			});
 
 			$('#sendcustomcake').on("click", function () {
+				document.getElementById('sendcustomcake').disabled = true;
+				document.getElementById('sendcustomcake').style.background = '#cccccc';
 				createCustomBooking(imgmass);
 			});
 		});

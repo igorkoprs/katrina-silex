@@ -163,12 +163,12 @@
             let elem = elems && elems[0];
             if (!elem) return;
             const links = elem.querySelectorAll('div > a');
-            console.log(links)
             links.forEach((elem) => {
                 if(elem.innerText === 'GetButton') elem.innerText = '';
             })
-            elem.style.right = '20px';
+			elem.style.right = '20px';
             elem.style.bottom = '80px';
+			elem.getElementsByClassName('sbsi7l-0 evMtho')[0].style.display = 'none';
             clearInterval(window.waitChatInterval)
         }, 500)
     };
